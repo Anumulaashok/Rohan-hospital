@@ -1,0 +1,19 @@
+---
+import Icon from './Icon.astro';
+import { FACILITIES } from '../data/facilities.js';
+
+interface Props { limit?: number; cols?: 2 | 3 }
+const { limit, cols = 3 } = Astro.props;
+const items = limit ? FACILITIES.slice(0, limit) : FACILITIES;
+---
+<ul class:list={['grid gap-x-10 gap-y-8 sm:grid-cols-2', cols === 3 && 'lg:grid-cols-3']}>
+  {items.map((f) => (
+    <li class="flex gap-4">
+      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white text-maroon ring-1 ring-blush-line"><Icon name={f.icon} class="h-5 w-5" /></span>
+      <div>
+        <h3 class="font-sans text-base font-semibold text-ink">{f.title}</h3>
+        <p class="mt-1 text-[15px] text-ink/70">{f.text}</p>
+      </div>
+    </li>
+  ))}
+</ul>

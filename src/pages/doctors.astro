@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import DoctorIntro from '../components/DoctorIntro.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { DOCTOR } from '../data/doctor.js';
+import { SPECIALISTS } from '../data/doctors.js';
+import drNaresh from '../assets/images/site/dr-naresh.jpg';
+import doctorsCouple from '../assets/images/site/doctors-couple.jpg';
+import portrait from '../assets/images/site/dr-sridevi.jpg';
+
+const [naresh, ...team] = SPECIALISTS;
+const initials = (name: string) => name.replace(/^Dr\.\s*/, '').split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+---
+<Base
+  title="Dr. Anamalla Sridevi Naresh & Our Doctors | Rohan Hospital Karimnagar"
+  description="Meet Dr. Anamalla Sridevi Naresh (MBBS, DGO, Master of Reproductive Medicine, Homerton University London), Dr. Anamalla Naresh (MD, critical care) and the specialist team at Rohan Hospital, Karimnagar."
+  image={portrait}
+>
+  <PageHeader te="మా వైద్యులు" title="The doctors you’ll meet" intro="A team led by a fertility specialist and a critical-care physician, working alongside surgeons, a paediatrician, a urologist and a radiologist." />
+
+  <section class="section">
+    <div class="container-x"><DoctorIntro /></div>
+
+    <div class="container-x mt-20 grid gap-8 lg:grid-cols-2">
+      <div class="rounded-[2rem] bg-blush p-6 sm:p-8">
+        <h3 class="text-2xl font-semibold">Education and training</h3>
+        <ol class="mt-6 space-y-5 border-l-2 border-lotus/30 pl-6">
+          {DOCTOR.education.map((e) => (
+            <li class="relative">
+              <span class="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full bg-maroon ring-4 ring-blush" aria-hidden="true"></span>
+              <p class="font-semibold text-ink">{e.title}</p>
+              <p class="text-[15px] text-ink/70">{e.detail}</p>
+            </li>
+          ))}
+          <li class="relative">
+            <span class="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full bg-lotus ring-4 ring-blush" aria-hidden="true"></span>
+            <p class="font-semibold text-ink">Clinical Director</p>
+            <p class="text-[15px] text-ink/70">Rohan Hospital &amp; Rohan Fertility (IVF) Centre, Karimnagar</p>
+          </li>
+        </ol>
+      </div>
+      <div class="rounded-[2rem] border border-blush-line p-6 sm:p-8">
+        <h3 class="text-2xl font-semibold">Areas of special care</h3>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {DOCTOR.expertise.map((x) => (<li class="rounded-full bg-blush px-4 py-2 text-[15px] text-ink">{x}</li>))}
+        </ul>
+        <div class="mt-8 grid gap-4 border-t border-blush-line pt-6">
+          <p class="text-ink/75">
+            After her MBBS and DGO, Dr. Sridevi earned a Master of Reproductive Medicine from Homerton University, London, and completed
+            accredited hands-on IVF training at Cleveland Clinic, USA. She leads the centre’s IVF, ICSI and IUI programmes and performs
+            hysteroscopy and laparoscopy.
+          </p>
+          <p class="te text-ink/75" lang="te">
+            డా॥ ఎనమల్ల శ్రీదేవి నరేష్ గారు గైనకాలజిస్ట్ &amp; ప్రసూతి వైద్య నిపుణులు, ఫెర్టిలిటీ (IVF) స్పెషలిస్ట్. హోమర్టన్ యూనివర్సిటీ, లండన్ నుండి
+            మాస్టర్స్ ఇన్ రిప్రొడక్టివ్ మెడిసిన్ (MRM) మరియు క్లీవ్‌ల్యాండ్ క్లినిక్, USA లో IVF శిక్షణ పొందారు.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-blush">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+      <Image src={drNaresh} alt={`${naresh.name}, ${naresh.role}`} widths={[360, 560]} sizes="(min-width: 1024px) 384px, 90vw" class="arch mx-auto aspect-[4/5] w-full max-w-sm object-cover object-top shadow-soft" />
+      <div>
+        <h2 class="section-title">Dr. Anamalla Naresh</h2>
+        <p class="mt-2 text-lg font-medium text-maroon">MBBS, MD</p>
+        <p class="mt-1 text-ink/70">{naresh.role}</p>
+        <p class="mt-6 text-ink/80">
+          Dr. Naresh leads emergency, anaesthesia and critical care at Rohan Hospital, so high-risk deliveries, surgery and ICU care have a
+          senior physician on hand. He is a former administrator at Apollo Reach Hospitals.
+        </p>
+        <ul class="mt-6 space-y-2 text-ink/80">
+          <li class="flex gap-2"><Icon name="check" class="mt-1 h-5 w-5 shrink-0 text-maroon" />Emergency and critical care</li>
+          <li class="flex gap-2"><Icon name="check" class="mt-1 h-5 w-5 shrink-0 text-maroon" />Anaesthesia for painless delivery and surgery</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x grid items-start gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+      <div>
+        <h2 class="section-title">Specialists on our team</h2>
+        <p class="lede">Consultants who work alongside Dr. Sridevi and Dr. Naresh.</p>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          {team.map((d) => (
+            <li class="flex items-start gap-3 rounded-2xl border border-blush-line p-4">
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-maroon text-sm font-semibold text-white" aria-hidden="true">{initials(d.name)}</span>
+              <span>
+                <span class="block font-semibold text-ink">{d.name}, {d.degree}</span>
+                <span class="block text-[15px] text-ink/70">{d.role}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Image src={doctorsCouple} alt="Dr. Anamalla Naresh and Dr. Anamalla Sridevi Naresh" widths={[400, 640]} sizes="(min-width: 1024px) 420px, 90vw" class="arch w-full object-cover shadow-soft" />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

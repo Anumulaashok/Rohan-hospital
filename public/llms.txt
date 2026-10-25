@@ -15,6 +15,14 @@
 - Gynaecological surgery: diagnostic laparoscopy & hysteroscopy, LAVH, myomectomy, microwave ablation for adenomyosis, hysteroscopic polypectomy
 - Obstetrics: 24/7 maternity care, painless (epidural) delivery, normal delivery & LSCS, high-risk pregnancy, ICU
 - Diagnostics: TVS, 3D TVS, Tiffa (anomaly) scan, NT scan, Doppler, follicular study, 24x7 laboratory
+- Speciality clinics: female and male infertility, puberty clinic, menopause clinic, PCOS/PCOD clinic
+
+## Facilities
+- IVF & ICSI lab with egg, sperm and embryo banking; egg and sperm freezing
+- Medical and surgical ICUs, ventilators, CPAP, defibrillators, infusion pumps
+- Voluson S8 3D ultrasound, ECG, 2D echo, X-ray, CTG
+- A/c normal delivery suite, newborn baby warmers, 24-hour laboratory
+- Special, deluxe and suite rooms; cashless insurance and state government reimbursement
 
 ## Fertility insights (on the website)
 - When to see a fertility specialist (under 35: after 12 months of trying; 35+: after 6 months; 40+: right away)
@@ -42,4 +50,15 @@
 - Phone: +91 97041 55550, +91 96766 03113, 0878-2228222
 - WhatsApp booking: https://wa.me/919704155550
 - Google Maps: https://maps.google.com/?cid=10209188967092575019
-- Official website: https://www.rohanhospitalknr.in/
+- Email: info@rohanhospitalknr.in
+- OP hours: 10:00 AM – 1:00 PM and 5:00 PM – 8:30 PM; maternity and emergency 24/7
+
+## Pages
+- Doctors: /doctors/
+- Treatments: /treatments/
+- Facilities: /facilities/
+- Tariffs: /tariffs/
+- Fertility insights: /insights/
+- Gallery and reviews: /gallery/
+- Book an appointment: /book/
+- Contact and directions: /contact/

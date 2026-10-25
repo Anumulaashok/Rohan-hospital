@@ -1,35 +1,46 @@
 # Rohan Hospital & Rohan Fertility (IVF) Centre
 
-Single-page website for Rohan Hospital, Karimnagar, with an appointment scheduler that opens a pre-filled WhatsApp booking message to `+91 97041 55550`.
+Multi-page website for Rohan Hospital, Karimnagar, with an appointment scheduler that opens a pre-filled WhatsApp booking message to `+91 97041 55550`.
 
 ## Stack
-Vite + vanilla JS (ES modules) + Tailwind CSS v3.
+[Astro](https://astro.build) 7 (static output) + Tailwind CSS v3 (via PostCSS) + vanilla JS for the booking form, tariff tabs, nav and lightbox. Pages ship as plain HTML; only those interactive pieces load JavaScript.
+
+Requires Node 22.23.4 or newer.
 
 ## Commands
 ```bash
 npm install
-npm run dev       # local dev server
+npm run dev       # local dev server at http://localhost:4321
 npm run build     # production build to dist/
 npm run preview   # serve the built site
+```
+
+## Production URL
+Canonical links, the sitemap and JSON-LD ids use `site` in `astro.config.mjs`, which defaults to `https://www.rohanhospitalknr.in`. Build for another domain with:
+```bash
+SITE_URL=https://example.com npm run build
 ```
 
 ## Structure
 | Path | Purpose |
 |---|---|
-| `index.html` | All page sections |
-| `src/config/hospital.js` | Name, address, phone numbers, WhatsApp number, map URLs |
-| `src/data/` | Doctor profile, team, FAQs, reviews, services, time slots, tariffs |
-| `src/render/` | Build-time HTML + JSON-LD renderers, injected via `<!--@name-->` markers by `vite.config.js` |
+| `src/pages/` | One file per page: home, doctors, treatments, facilities, tariffs, insights (+ one page per article), gallery, book, contact, 404 |
+| `src/layouts/Base.astro` | `<head>` (SEO, Open Graph, JSON-LD, fonts), header, footer, mobile action bar, lightbox |
+| `src/components/` | Page sections (doctor intro, treatments, facilities, reviews, FAQ, booking form, tariffs, location…) |
+| `src/config/hospital.js` | Name, address, phones, WhatsApp, email, hours, social links, map and review URLs |
+| `src/data/` | Doctor profile, team, FAQs, reviews, services, clinics, facilities, gallery photos, insights, slots, tariffs |
+| `src/lib/` | JSON-LD builder, nav items, icon set (Lucide + Simple Icons, inlined at build) |
 | `src/booking/` | Scheduler: store, message builder, validation, form binding, submit handler |
 | `src/ui/` | Nav, tariff tabs, image lightbox |
-| `public/` | Optimised photos, `robots.txt`, `llms.txt` (AI-crawler summary) |
-
-Data-driven sections are pre-rendered into the HTML at build time so search engines and AI crawlers see the full content without running JS. Restart `npm run dev` after editing `src/data/` or `src/render/`.
+| `src/assets/images/` | Photos; Astro converts them to responsive WebP at build time |
+| `public/` | `robots.txt`, `llms.txt` (AI-crawler summary), redirect pages for old `.html` URLs |
 
 ## Updating content
-- **Phone / WhatsApp number:** `src/config/hospital.js`. The hard-coded `tel:`/`wa.me` links in `index.html` also need updating.
+- **Phone / WhatsApp number:** `src/config/hospital.js`. Some `tel:`/`wa.me` links in components also use the number directly; search for `9704155550`.
 - **Prices:** `src/data/tariffs.js`
-- **Doctor bio / FAQs / reviews / fertility insights:** `src/data/doctor.js`, `src/data/faqs.js`, `src/data/reviews.js`, `src/data/insights.js`. Keep `public/llms.txt` in sync.
+- **Doctor bio / FAQs / reviews / insights / facilities:** the matching file in `src/data/`. Keep `public/llms.txt` in sync.
+- **New insight article:** add an entry with a unique `slug` to `src/data/insights.js`; its page is generated automatically.
+- **Photos:** drop the file in `src/assets/images/` and import it; add family photos to `src/data/gallery.js`.
 - **Google rating:** `GOOGLE_REVIEWS` in `src/config/hospital.js` (update the rating/count periodically).
 - **Time slots:** `src/data/slots.js`
 

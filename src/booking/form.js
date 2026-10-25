@@ -21,8 +21,8 @@ function renderSlotGrid(container) {
   container.innerHTML = SLOT_GROUPS.map(
     (group) => `
       <div>
-        <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">${group.label}</p>
-        <div class="grid grid-cols-3 gap-2 sm:grid-cols-4 xl:grid-cols-5">
+        <p class="mb-2 text-sm font-medium text-ink/60">${group.label}</p>
+        <div class="grid grid-cols-3 gap-2 sm:grid-cols-4">
           ${group.slots.map((slot) => `<button type="button" class="slot-pill" data-slot="${slot}" aria-pressed="false">${slot}</button>`).join('')}
         </div>
       </div>`,

@@ -1,0 +1,23 @@
+---
+import { STROKE_ICONS, BRAND_ICONS } from '../lib/icons.js';
+
+interface Props { name: string; class?: string; label?: string }
+const { name, class: className = 'h-5 w-5', label } = Astro.props;
+
+const stroke = STROKE_ICONS[name];
+const brand = BRAND_ICONS[name];
+if (!stroke && !brand) throw new Error(`Unknown icon: ${name}`);
+
+// Keep only the inner shapes so this component controls the <svg> attributes.
+const inner = (stroke ?? brand)
+  .replace(/<!--[\s\S]*?-->/g, '')
+  .replace(/<title>[\s\S]*?<\/title>/, '')
+  .replace(/^[\s\S]*?<svg[^>]*>/, '')
+  .replace(/<\/svg>\s*$/, '');
+const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' };
+---
+{stroke ? (
+  <svg class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" {...a11y} set:html={inner} />
+) : (
+  <svg class={className} viewBox="0 0 24 24" fill="currentColor" {...a11y} set:html={inner} />
+)}

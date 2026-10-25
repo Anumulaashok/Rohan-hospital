@@ -13,7 +13,7 @@ export function initNav() {
     if (e.target.closest('a')) setOpen(false);
   });
 
-  const onScroll = () => header?.classList.toggle('shadow-card', window.scrollY > 8);
+  const onScroll = () => header?.classList.toggle('shadow-soft', window.scrollY > 8);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 }

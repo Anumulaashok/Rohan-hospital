@@ -1,0 +1,164 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import DoctorIntro from '../components/DoctorIntro.astro';
+import TreatmentGroups from '../components/TreatmentGroups.astro';
+import FamiliesStrip from '../components/FamiliesStrip.astro';
+import Facilities from '../components/Facilities.astro';
+import Reviews from '../components/Reviews.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Location from '../components/Location.astro';
+import { INSIGHTS } from '../data/insights.js';
+import { GOOGLE_REVIEWS } from '../config/hospital.js';
+import withTwins from '../assets/images/site/dr-sridevi-with-twins.jpg';
+import triplets from '../assets/images/site/dr-sridevi-newborn-triplets.jpg';
+import withBaby from '../assets/images/site/dr-sridevi-with-baby.jpg';
+import facade from '../assets/images/site/hospital-facade.jpg';
+
+const facts = [
+  { icon: 'star', text: `Rated ${GOOGLE_REVIEWS.rating} on Google by ${GOOGLE_REVIEWS.count} patients` },
+  { icon: 'heart', text: 'Caring for Karimnagar families for over a decade' },
+  { icon: 'clock', text: 'Maternity and emergency care, 24 hours a day' },
+  { icon: 'flask', text: 'IVF lab, 3D scans and 24-hour lab in-house' },
+];
+---
+<Base
+  title="Dr. Sridevi Naresh, IVF & Fertility Specialist in Karimnagar | Rohan Hospital & Rohan Fertility (IVF) Centre"
+  description="Rohan Hospital & Rohan Fertility (IVF) Centre, Karimnagar. IVF, ICSI, IUI, painless delivery, high-risk pregnancy care and laparoscopy, led by Dr. Anamalla Sridevi Naresh (MBBS, DGO, MRM London; Cleveland Clinic IVF training). Book on WhatsApp."
+  faq
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-blush">
+    <div class="container-x grid items-center gap-12 pb-16 pt-12 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:pb-24 lg:pt-20">
+      <div>
+        <p class="te text-2xl font-semibold leading-snug text-lotus sm:text-3xl" lang="te">మాతృత్వం ఒక వరం…<br />మీకూ ఉంది ఆ అవకాశం</p>
+        <h1 class="mt-4 text-[2.5rem] font-bold leading-[1.04] tracking-tight sm:text-6xl lg:text-[3.6rem]" style="font-stretch:118%">
+          Motherhood is a blessing. It can be yours too.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg text-ink/75">
+          Fertility treatment, safe and painless delivery, and keyhole surgery in Karimnagar, led by
+          Dr. Anamalla Sridevi Naresh, trained at Homerton University, London and Cleveland Clinic, USA.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/book/" class="btn-primary text-base"><Icon name="calendar" class="h-5 w-5" />Book a visit</a>
+          <a href="https://wa.me/919704155550" target="_blank" rel="noopener" class="btn-wa text-base"><Icon name="whatsapp" class="h-5 w-5" />WhatsApp us</a>
+        </div>
+        <p class="mt-5 flex items-center gap-2 text-[15px] text-ink/70">
+          <Icon name="phone" class="h-4 w-4 text-maroon" />Emergency, any time: <a href="tel:+919704155550" class="link">97041 55550</a>
+        </p>
+      </div>
+
+      <div class="relative mx-auto grid w-full max-w-lg grid-cols-[1fr_1.25fr_1fr] items-end gap-3 sm:gap-4">
+        <Image src={triplets} alt="Dr. Sridevi in the operation theatre with three newborns" widths={[200, 320]} sizes="(min-width: 1024px) 160px, 28vw" loading="eager" class="arch arch-rise aspect-[3/5] w-full object-cover shadow-soft" style="animation-delay:.15s" />
+        <Image src={withTwins} alt="Dr. Sridevi holding two babies at Rohan Hospital" widths={[260, 420]} sizes="(min-width: 1024px) 210px, 36vw" loading="eager" fetchpriority="high" class="arch arch-rise mb-10 aspect-[3/5] w-full object-cover shadow-soft" />
+        <Image src={withBaby} alt="Dr. Sridevi holding a baby in her consultation room" widths={[200, 320]} sizes="(min-width: 1024px) 160px, 28vw" loading="eager" class="arch arch-rise aspect-[3/5] w-full object-cover shadow-soft" style="animation-delay:.3s" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Facts -->
+  <section class="border-b border-blush-line">
+    <ul class="container-x grid grid-cols-1 divide-y divide-blush-line sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+      {facts.map((f) => (
+        <li class="flex items-center gap-3 py-5 sm:px-4 lg:first:pl-0">
+          <Icon name={f.icon} class="h-6 w-6 shrink-0 text-lotus" />
+          <span class="text-[15px] font-medium text-ink">{f.text}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- Doctor -->
+  <section class="section">
+    <div class="container-x">
+      <DoctorIntro>
+        <a href="/doctors/" class="btn-outline mt-8">Meet Dr. Sridevi and the team<Icon name="arrowRight" class="h-4 w-4" /></a>
+      </DoctorIntro>
+    </div>
+  </section>
+
+  <!-- Treatments -->
+  <section class="section bg-blush">
+    <div class="container-x">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="section-title">Care for every stage, under one roof</h2>
+          <p class="lede">From your first fertility check to delivery and beyond, with scans and lab tests in the same building.</p>
+        </div>
+        <a href="/treatments/" class="btn-outline shrink-0">All treatments</a>
+      </div>
+      <div class="mt-10"><TreatmentGroups /></div>
+    </div>
+  </section>
+
+  <!-- Families -->
+  <section class="section">
+    <div class="container-x">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="section-title">Moments from Rohan Hospital</h2>
+          <p class="lede">Dr. Sridevi with some of the families she has cared for.</p>
+        </div>
+        <a href="/gallery/" class="btn-outline shrink-0">Open the gallery</a>
+      </div>
+      <div class="mt-10"><FamiliesStrip /></div>
+    </div>
+  </section>
+
+  <!-- Facilities -->
+  <section class="section bg-blush">
+    <div class="container-x grid items-start gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
+      <div class="lg:sticky lg:top-28">
+        <h2 class="section-title">Equipped for the unexpected</h2>
+        <p class="lede">An IVF lab, ICUs, a 3D scanner and a round-the-clock lab mean fewer trips elsewhere and faster decisions when it matters.</p>
+        <Image src={facade} alt="Rohan Hospital building on Choppadandi Road, Karimnagar" widths={[320, 560]} sizes="300px" class="mt-8 hidden w-full max-w-[300px] mix-blend-multiply lg:block" />
+        <a href="/facilities/" class="btn-outline mt-8">See all facilities</a>
+      </div>
+      <Facilities limit={8} cols={2} />
+    </div>
+  </section>
+
+  <!-- Insights -->
+  <section class="section">
+    <div class="container-x">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="section-title">Before your first visit</h2>
+          <p class="lede">Plain answers to what couples ask us most.</p>
+        </div>
+        <a href="/insights/" class="btn-outline shrink-0">All insights</a>
+      </div>
+      <ul class="mt-10 grid gap-5 md:grid-cols-3">
+        {INSIGHTS.slice(0, 3).map((a) => (
+          <li>
+            <a href={`/insights/${a.slug}/`} class="group flex h-full flex-col rounded-[2rem] bg-blush p-7 transition-colors hover:bg-blush-line/60">
+              <span class="text-sm font-semibold text-lotus">{a.tag}</span>
+              <h3 class="mt-2 text-2xl font-semibold leading-snug">{a.title}</h3>
+              <p class="mt-3 flex-1 text-ink/70">{a.summary}</p>
+              <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-maroon">Read<Icon name="arrowRight" class="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section bg-blush">
+    <div class="container-x"><Reviews limit={6} /></div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container-x"><Faq /></div>
+  </section>
+
+  <CtaBand />
+
+  <!-- Location -->
+  <section class="section">
+    <div class="container-x"><Location /></div>
+  </section>
+</Base>

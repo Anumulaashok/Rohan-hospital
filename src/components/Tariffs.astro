@@ -1,0 +1,47 @@
+---
+import { getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import { TARIFF_TABS, TARIFF_FOOTNOTES } from '../data/tariffs.js';
+import board from '../assets/images/tariff-board.jpg';
+
+const boardFull = await getImage({ src: board, width: 1800, format: 'webp' });
+---
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <p class="text-ink/70">The standard charges displayed at the hospital, in Indian rupees.</p>
+  <button type="button" class="btn-outline shrink-0" data-lightbox={boardFull.src} data-lightbox-alt="Rohan Hospital tariff board listing consultation, procedure, room, scan and lab charges">
+    <Icon name="image" class="h-5 w-5" />See the original tariff board
+  </button>
+</div>
+<div class="mt-6 rounded-[2rem] bg-white p-4 ring-1 ring-blush-line sm:p-8">
+  <div id="tariff-tablist" role="tablist" aria-label="Tariff categories" class="-mx-1 flex gap-2 overflow-x-auto px-1 pb-2">
+    {TARIFF_TABS.map((tab, i) => (
+      <button type="button" role="tab" id={`tab-${tab.id}`} class="tab-btn" aria-selected={String(i === 0)} aria-controls={`panel-${tab.id}`} tabindex={i === 0 ? 0 : -1} data-tab={tab.id}>{tab.label}</button>
+    ))}
+  </div>
+  {TARIFF_TABS.map((tab, i) => (
+    <div id={`panel-${tab.id}`} role="tabpanel" aria-labelledby={`tab-${tab.id}`} class="mt-4" tabindex="0" hidden={i !== 0}>
+      <h3 class="sr-only">{tab.label} charges</h3>
+      {tab.note && <p class="mb-2 text-sm text-ink/60">{tab.note}</p>}
+      <div class:list={[tab.rows.length > 12 && 'md:columns-2 md:gap-10']}>
+        <table class="w-full text-[15px] sm:text-base">
+          <tbody>
+            {tab.rows.map(([item, price]) => (
+              <tr class="border-b border-blush-line last:border-0">
+                <td class="py-2.5 pr-4 text-ink/80">{item}</td>
+                <td class="whitespace-nowrap py-2.5 text-right font-semibold text-maroon">{price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  ))}
+  <ul class="mt-6 list-disc space-y-1 border-t border-blush-line pl-5 pt-4 text-sm text-ink/60">
+    {TARIFF_FOOTNOTES.map((n) => <li>{n}</li>)}
+  </ul>
+</div>
+
+<script>
+  import { initTariffTabs } from '../ui/tabs.js';
+  initTariffTabs();
+</script>
