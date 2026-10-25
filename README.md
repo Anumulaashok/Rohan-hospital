@@ -18,16 +18,20 @@ npm run preview   # serve the built site
 |---|---|
 | `index.html` | All page sections |
 | `src/config/hospital.js` | Name, address, phone numbers, WhatsApp number, map URLs |
-| `src/data/` | Booking services, treatments, time slots, tariffs (from the hospital tariff board) |
+| `src/data/` | Doctor profile, team, FAQs, reviews, services, time slots, tariffs |
+| `src/render/` | Build-time HTML + JSON-LD renderers, injected via `<!--@name-->` markers by `vite.config.js` |
 | `src/booking/` | Scheduler: store, message builder, validation, form binding, submit handler |
-| `src/ui/` | Nav, treatments accordion, tariff tabs, image lightbox |
-| `public/images/` | Optimised hospital photos |
+| `src/ui/` | Nav, tariff tabs, image lightbox |
+| `public/` | Optimised photos, `robots.txt`, `llms.txt` (AI-crawler summary) |
+
+Data-driven sections are pre-rendered into the HTML at build time so search engines and AI crawlers see the full content without running JS. Restart `npm run dev` after editing `src/data/` or `src/render/`.
 
 ## Updating content
 - **Phone / WhatsApp number:** `src/config/hospital.js`. The hard-coded `tel:`/`wa.me` links in `index.html` also need updating.
 - **Prices:** `src/data/tariffs.js`
+- **Doctor bio / FAQs / reviews / fertility insights:** `src/data/doctor.js`, `src/data/faqs.js`, `src/data/reviews.js`, `src/data/insights.js`. Keep `public/llms.txt` in sync.
+- **Google rating:** `GOOGLE_REVIEWS` in `src/config/hospital.js` (update the rating/count periodically).
 - **Time slots:** `src/data/slots.js`
-- **Diet chart:** add `public/images/diet-chart.jpg` and place it at the `TODO` in the Nutrition section.
 
 ## Next phase: payments & slot locking
 `handleAppointmentSubmission()` in `src/booking/submit.js` is async and has commented hooks for:
