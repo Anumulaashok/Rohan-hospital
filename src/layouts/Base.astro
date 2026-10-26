@@ -85,11 +85,20 @@ const jsonLd = buildSchema({
       <img src="" alt="" class="h-auto max-h-[92vh] w-full rounded-2xl object-contain" />
     </dialog>
 
+    <dialog id="video-dialog" class="w-[min(92vw,960px)] max-w-none overflow-visible bg-transparent p-0 backdrop:bg-black/85 data-[short]:w-[min(92vw,calc(78vh*9/16))]">
+      <button type="button" data-close class="absolute -top-14 right-0 z-10 grid h-11 w-11 place-items-center rounded-full bg-white/90 text-ink shadow" aria-label="Close video">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+      <div data-frame class="relative aspect-video overflow-hidden rounded-2xl bg-black"></div>
+    </dialog>
+
     <script>
       import { initNav } from '../ui/nav.js';
       import { initLightbox } from '../ui/lightbox.js';
+      import { initVideoDialog } from '../ui/video.js';
       initNav();
       initLightbox();
+      initVideoDialog();
     </script>
   </body>
 </html>

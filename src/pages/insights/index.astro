@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
+import VideoStrip from '../../components/VideoStrip.astro';
 import { INSIGHTS } from '../../data/insights.js';
 ---
 <Base
@@ -26,6 +27,9 @@ import { INSIGHTS } from '../../data/insights.js';
       </ul>
       <p class="mt-10 text-center text-sm text-ink/60">This information is for general education and is not a substitute for medical advice. Please consult a doctor for guidance specific to you.</p>
     </div>
+  </section>
+  <section class="section bg-blush">
+    <div class="container-x"><VideoStrip /></div>
   </section>
   <CtaBand />
 </Base>
