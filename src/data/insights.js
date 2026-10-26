@@ -1,5 +1,6 @@
 export const INSIGHTS = [
   {
+    slug: 'when-to-see-a-fertility-specialist',
     tag: 'Getting started',
     icon: '🕰️',
     title: 'When should you see a fertility specialist?',
@@ -10,6 +11,7 @@ export const INSIGHTS = [
     ],
   },
   {
+    slug: 'iui-vs-ivf-vs-icsi',
     tag: 'Treatments',
     icon: '🧬',
     title: 'IUI, IVF and ICSI: what’s the difference?',
@@ -21,6 +23,7 @@ export const INSIGHTS = [
     ],
   },
   {
+    slug: 'what-to-expect-in-an-ivf-cycle',
     tag: 'Step by step',
     icon: '🗓️',
     title: 'What to expect during an IVF cycle',
@@ -34,6 +37,7 @@ export const INSIGHTS = [
     ],
   },
   {
+    slug: 'pcos-and-fertility',
     tag: 'Hormones',
     icon: '🩸',
     title: 'PCOS and fertility',
@@ -44,6 +48,7 @@ export const INSIGHTS = [
     ],
   },
   {
+    slug: 'amh-and-semen-analysis',
     tag: 'Tests',
     icon: '🔬',
     title: 'Understanding AMH and semen analysis',
@@ -54,6 +59,7 @@ export const INSIGHTS = [
     ],
   },
   {
+    slug: 'fibroids-adenomyosis-endometriosis',
     tag: 'Uterine health',
     icon: '🌸',
     title: 'Fibroids, adenomyosis, endometriosis and fertility',
@@ -64,6 +70,7 @@ export const INSIGHTS = [
     ],
   },
   {
+    slug: 'lifestyle-tips-for-fertility',
     tag: 'Preparing for pregnancy',
     icon: '🥗',
     title: 'Lifestyle tips that support fertility',
@@ -74,6 +81,7 @@ export const INSIGHTS = [
     ],
   },
   {
+    slug: 'fertility-myths',
     tag: 'Myths vs facts',
     icon: '💡',
     title: 'Common fertility myths',

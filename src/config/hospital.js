@@ -29,3 +29,20 @@ export const GOOGLE_REVIEWS = {
   readUrl: `https://search.google.com/local/reviews?placeid=${GOOGLE_PLACE_ID}`,
   writeUrl: `https://search.google.com/local/writereview?placeid=${GOOGLE_PLACE_ID}`,
 };
+
+export const EMAIL = 'info@rohanhospitalknr.in';
+
+export const HOURS = [
+  { label: 'Morning OP', value: '10:00 AM – 1:00 PM' },
+  { label: 'Evening OP', value: '5:00 PM – 8:30 PM' },
+  { label: 'Maternity & emergency', value: 'Open 24/7' },
+];
+
+export const SOCIAL = [
+  { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/rohanfertilitycentre/' },
+  { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/people/Rohan-Fertility-Centre-Karimnagar/61556053951075/' },
+  { name: 'YouTube', icon: 'youtube', url: 'https://www.youtube.com/@rohanhospital-m1p' },
+  { name: 'X', icon: 'x', url: 'https://x.com/RohanHospital' },
+];
+
+export const TOUR_VIDEO_ID = 'hcnYCejv_GU';

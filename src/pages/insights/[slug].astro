@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { INSIGHTS } from '../../data/insights.js';
+
+export function getStaticPaths() {
+  return INSIGHTS.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const site = Astro.site!.href;
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const others = INSIGHTS.filter((a) => a.slug !== article.slug).slice(0, 3);
+const schema = [{
+  '@type': 'MedicalWebPage',
+  '@id': `${url}#article`,
+  url,
+  headline: article.title,
+  description: article.summary,
+  inLanguage: 'en-IN',
+  publisher: { '@id': `${site}#hospital` },
+  audience: { '@type': 'PeopleAudience', audienceType: 'Patients' },
+}];
+---
+<Base title={`${article.title} | Rohan Fertility Centre Karimnagar`} description={article.summary} schema={schema}>
+  <article>
+    <header class="bg-blush">
+      <div class="container-x max-w-3xl py-14 sm:py-20">
+        <a href="/insights/" class="inline-flex items-center gap-1.5 text-sm font-semibold text-maroon hover:underline">
+          <Icon name="arrowRight" class="h-4 w-4 rotate-180" />All insights
+        </a>
+        <p class="mt-6 text-sm font-semibold text-lotus">{article.tag}</p>
+        <h1 class="mt-2 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">{article.title}</h1>
+        <p class="lede">{article.summary}</p>
+      </div>
+    </header>
+    <div class="container-x max-w-3xl py-12 sm:py-16">
+      <div class="prose-care text-lg leading-relaxed text-ink/85">
+        {article.body.map((p) => <p>{p}</p>)}
+      </div>
+      <aside class="mt-12 flex flex-col gap-4 rounded-[2rem] bg-blush p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <p class="font-display text-xl font-semibold text-ink">Questions about your own situation?</p>
+        <a href="/book/" class="btn-primary shrink-0"><Icon name="calendar" class="h-5 w-5" />Talk to Dr. Sridevi</a>
+      </aside>
+      <p class="mt-8 text-sm text-ink/60">This information is for general education and is not a substitute for medical advice. Please consult a doctor for guidance specific to you.</p>
+    </div>
+  </article>
+
+  <section class="section border-t border-blush-line">
+    <div class="container-x">
+      <h2 class="section-title">Keep reading</h2>
+      <ul class="mt-8 grid gap-5 md:grid-cols-3">
+        {others.map((a) => (
+          <li>
+            <a href={`/insights/${a.slug}/`} class="group flex h-full flex-col rounded-[2rem] bg-blush p-7 transition-colors hover:bg-blush-line/60">
+              <span class="text-sm font-semibold text-lotus">{a.tag}</span>
+              <h3 class="mt-2 text-xl font-semibold leading-snug">{a.title}</h3>
+              <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-maroon">Read<Icon name="arrowRight" class="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

@@ -1,0 +1,17 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { FAMILY_PHOTOS } from '../data/gallery.js';
+
+const photos = await Promise.all(
+  FAMILY_PHOTOS.map(async (p) => ({ ...p, full: (await getImage({ src: p.src, width: 1200, format: 'webp' })).src })),
+);
+---
+<ul class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-5 lg:overflow-visible">
+  {photos.map((p, i) => (
+    <li class="w-[62vw] max-w-[260px] shrink-0 snap-start lg:w-auto lg:max-w-none">
+      <button type="button" class="block w-full overflow-hidden" data-lightbox={p.full} data-lightbox-alt={p.alt} aria-label={`View photo: ${p.alt}`}>
+        <Image src={p.src} alt={p.alt} widths={[260, 400]} sizes="(min-width: 1024px) 20vw, 62vw" class:list={['arch aspect-[3/4] w-full object-cover transition-transform duration-500 hover:scale-[1.03]', i % 2 === 1 && 'lg:mt-10']} />
+      </button>
+    </li>
+  ))}
+</ul>

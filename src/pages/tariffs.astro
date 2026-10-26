@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Tariffs from '../components/Tariffs.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+<Base
+  title="Tariffs: Consultation, Scan, Lab, Room & Procedure Charges | Rohan Hospital Karimnagar"
+  description="Transparent charges at Rohan Hospital, Karimnagar: consultation from ₹500, ultrasound scans, lab tests, rooms, delivery and laparoscopic procedures."
+>
+  <PageHeader te="ధరలు" title="Clear charges, before you come in" intro="Consultation, scan, lab, room and procedure charges, copied from the tariff board at the hospital." />
+  <section class="section">
+    <div class="container-x"><Tariffs /></div>
+  </section>
+  <CtaBand />
+</Base>

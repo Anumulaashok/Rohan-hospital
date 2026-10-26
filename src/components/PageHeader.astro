@@ -1,0 +1,16 @@
+---
+interface Props { title: string; intro?: string; te?: string }
+const { title, intro, te } = Astro.props;
+---
+<section class="relative overflow-hidden bg-blush">
+  <svg class="pointer-events-none absolute -right-24 top-6 hidden h-[130%] text-lotus/15 md:block" viewBox="0 0 200 300" fill="none" aria-hidden="true">
+    <path d="M10 300V100a90 90 0 01180 0v200" stroke="currentColor" stroke-width="2" />
+    <path d="M40 300V110a60 60 0 01120 0v190" stroke="currentColor" stroke-width="2" />
+  </svg>
+  <div class="container-x relative py-14 sm:py-20">
+    {te && <p class="te text-lg font-semibold text-lotus" lang="te">{te}</p>}
+    <h1 class="mt-2 max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl">{title}</h1>
+    {intro && <p class="lede">{intro}</p>}
+    <slot />
+  </div>
+</section>

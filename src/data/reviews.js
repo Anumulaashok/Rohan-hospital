@@ -1,4 +1,4 @@
-// Patient reviews as published on rohanhospitalknr.in/testimonials.html.
+// Google reviews as quoted on rohanhospitalknr.in/testimonials.html.
 export const REVIEWS = [
   {
     name: 'Santhosh Kumar Madishetti',
@@ -23,5 +23,9 @@ export const REVIEWS = [
   {
     name: 'Neravena Radhakrishna',
     text: 'From the moment I walked in, I was met with professionalism and kindness. The facilities were clean and the staff made me feel comfortable. Excellent care overall.',
+  },
+  {
+    name: 'Venkatesh Gade',
+    text: 'Anyone looking for the best Gynic hospital should visit Rohan Fertility Center. Skilled doctors, hygiene rooms, supportive staff, and affordable care.',
   },
 ];
