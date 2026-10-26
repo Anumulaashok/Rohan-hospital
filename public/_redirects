@@ -1,0 +1,7 @@
+# Old site URLs
+/about.html          /doctors/     301
+/doctors.html        /doctors/     301
+/service.html        /treatments/  301
+/blog.html           /insights/    301
+/testimonials.html   /gallery/     301
+/contact.html        /contact/     301
