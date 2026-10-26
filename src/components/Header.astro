@@ -2,44 +2,51 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { NAV } from '../lib/nav.js';
+import { useLang, basePath, localize } from '../i18n/index.js';
 import logo from '../assets/images/site/logo.png';
 
-const path = Astro.url.pathname;
-const isActive = (href: string) => path === href || path.startsWith(href);
+const { lang, other, tr, link, altPath } = useLang(Astro.url);
+const path = basePath(Astro.url.pathname);
+const isActive = (href: string) => path.startsWith(href);
+// The 404 page has no Telugu twin, so its language button goes to the home page.
+const switchHref = path.startsWith('/404') ? localize('/', other) : altPath;
 ---
 <header id="site-header" class="sticky top-0 z-40 border-b border-blush-line/70 bg-white/95 backdrop-blur transition-shadow">
-  <div class="container-x flex h-[72px] items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-3" aria-label="Rohan Hospital home">
+  <div class="container-x flex h-[72px] items-center justify-between gap-3">
+    <a href={link('/')} class="flex min-w-0 items-center gap-3" aria-label={tr('Rohan Hospital home', 'రోహన్ హాస్పిటల్ హోమ్')}>
       <Image src={logo} alt="" width={44} height={44} class="h-10 w-10 shrink-0 rounded-full sm:h-11 sm:w-11" loading="eager" />
       <span class="leading-tight">
-        <span class="block whitespace-nowrap font-display text-base font-bold text-maroon sm:text-lg" style="font-stretch:115%">Rohan Hospital</span>
-        <span class="hidden whitespace-nowrap text-xs text-ink/60 sm:block">Fertility (IVF) Centre, Karimnagar</span>
+        <span class="block whitespace-nowrap font-display text-base font-bold text-maroon sm:text-lg" style="font-stretch:115%">{tr('Rohan Hospital', 'రోహన్ హాస్పిటల్')}</span>
+        <span class="hidden whitespace-nowrap text-xs text-ink/60 sm:block">{tr('Fertility (IVF) Centre, Karimnagar', 'ఫెర్టిలిటీ (IVF) సెంటర్, కరీంనగర్')}</span>
       </span>
     </a>
-    <nav class="hidden items-center gap-1 text-[15px] font-medium xl:flex" aria-label="Primary">
+    <nav class="hidden items-center gap-0.5 text-[15px] font-medium xl:flex" aria-label={tr('Primary', 'ప్రధాన మెనూ')}>
       {NAV.map((item) => (
         <a
-          href={item.href}
-          class:list={['rounded-full px-3 py-2 transition-colors hover:text-maroon', isActive(item.href) ? 'bg-blush text-maroon' : 'text-ink/75']}
+          href={link(item.href)}
+          class:list={['whitespace-nowrap rounded-full px-3 py-2 transition-colors hover:text-maroon', isActive(item.href) ? 'bg-blush text-maroon' : 'text-ink/75']}
           aria-current={isActive(item.href) ? 'page' : undefined}
-        >{item.label}</a>
+        >{item[lang]}</a>
       ))}
     </nav>
-    <div class="flex items-center gap-2">
-      <a href="tel:+919704155550" class="btn-outline hidden px-4 sm:inline-flex"><Icon name="phone" class="h-4 w-4" />97041 55550</a>
-      <a href="/book/" class="btn-primary px-5">Book visit</a>
-      <button id="nav-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-full text-ink xl:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+    <div class="flex shrink-0 items-center gap-2">
+      <a href={switchHref} hreflang={other} lang={other} class="btn-outline min-h-[44px] px-3 sm:px-4" title={tr('Read this page in Telugu', 'Read this page in English')}>
+        <Icon name="languages" class="h-4 w-4" />{lang === 'te' ? 'English' : 'తెలుగు'}
+      </a>
+      <a href="tel:+919704155550" class="btn-outline hidden px-4 lg:inline-flex xl:hidden 2xl:inline-flex"><Icon name="phone" class="h-4 w-4" />97041 55550</a>
+      <a href={link('/book/')} class="btn-primary hidden px-5 sm:inline-flex">{tr('Book visit', 'అపాయింట్‌మెంట్')}</a>
+      <button id="nav-toggle" type="button" class="grid h-11 w-11 place-items-center rounded-full text-ink xl:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label={tr('Open menu', 'మెనూ తెరవండి')}>
         <Icon name="menu" class="h-6 w-6" />
       </button>
     </div>
   </div>
-  <nav id="mobile-menu" class="border-t border-blush-line bg-white xl:hidden" aria-label="Mobile" hidden>
+  <nav id="mobile-menu" class="border-t border-blush-line bg-white xl:hidden" aria-label={tr('Mobile', 'మొబైల్ మెనూ')} hidden>
     <div class="container-x grid grid-cols-2 gap-x-4 py-3 text-base font-medium">
-      <a href="/" class="py-3" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+      <a href={link('/')} class="py-3" aria-current={path === '/' ? 'page' : undefined}>{tr('Home', 'హోమ్')}</a>
       {NAV.map((item) => (
-        <a href={item.href} class:list={['py-3', isActive(item.href) && 'text-maroon']} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+        <a href={link(item.href)} class:list={['py-3', isActive(item.href) && 'text-maroon']} aria-current={isActive(item.href) ? 'page' : undefined}>{item[lang]}</a>
       ))}
-      <a href="/book/" class="py-3 text-maroon">Book appointment</a>
+      <a href={link('/book/')} class="py-3 text-maroon">{tr('Book appointment', 'అపాయింట్‌మెంట్ బుక్ చేయండి')}</a>
     </div>
   </nav>
 </header>

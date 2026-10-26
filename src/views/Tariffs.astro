@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Tariffs from '../components/Tariffs.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { useLang } from '../i18n/index.js';
+
+const { tr } = useLang(Astro.url);
+---
+<Base
+  title={tr('Tariffs: Consultation, Scan, Lab, Room & Procedure Charges | Rohan Hospital Karimnagar', 'ధరలు: కన్సల్టేషన్, స్కాన్, ల్యాబ్, గది & ప్రొసీజర్ ఛార్జీలు | రోహన్ హాస్పిటల్ కరీంనగర్')}
+  description={tr(
+    'Transparent charges at Rohan Hospital, Karimnagar: consultation from ₹500, ultrasound scans, lab tests, rooms, delivery and laparoscopic procedures.',
+    'రోహన్ హాస్పిటల్, కరీంనగర్‌లో పారదర్శకమైన ఛార్జీలు: ₹500 నుంచి కన్సల్టేషన్, అల్ట్రాసౌండ్ స్కాన్‌లు, ల్యాబ్ పరీక్షలు, గదులు, ప్రసవం, లాపరోస్కోపిక్ ప్రొసీజర్లు.',
+  )}
+>
+  <PageHeader
+    kicker={{ en: 'Tariffs', te: 'ధరలు' }}
+    title={tr('Clear charges, before you come in', 'రాకముందే స్పష్టమైన ఛార్జీలు')}
+    intro={tr('Consultation, scan, lab, room and procedure charges, copied from the tariff board at the hospital.', 'ఆసుపత్రిలోని టారిఫ్ బోర్డ్ నుంచి తీసుకున్న కన్సల్టేషన్, స్కాన్, ల్యాబ్, గది, ప్రొసీజర్ ఛార్జీలు.')}
+  />
+  <section class="section">
+    <div class="container-x"><Tariffs /></div>
+  </section>
+  <CtaBand />
+</Base>

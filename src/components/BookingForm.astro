@@ -1,70 +1,87 @@
 ---
 import Icon from './Icon.astro';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
+
+const { lang, tr } = useLang(Astro.url);
+const i18n = {
+  services: getContent(lang).bookingServices,
+  slotGroups: { morning: tr('Morning', 'ఉదయం'), evening: tr('Evening', 'సాయంత్రం') },
+  pastSlot: tr('This time has already passed today', 'ఈ రోజు ఈ సమయం ఇప్పటికే దాటిపోయింది'),
+  errors: lang === 'te' ? {
+    name: 'దయచేసి రోగి పూర్తి పేరు నమోదు చేయండి.',
+    phone: 'సరైన 10 అంకెల మొబైల్ నంబర్ నమోదు చేయండి.',
+    date: 'దయచేసి మీకు అనుకూలమైన తేదీని ఎంచుకోండి.',
+    datePast: 'దయచేసి ఈ రోజు లేదా తర్వాతి తేదీని ఎంచుకోండి.',
+    slot: 'దయచేసి ఒక సమయాన్ని ఎంచుకోండి.',
+    slotPast: 'ఈ సమయం ఇప్పటికే దాటిపోయింది. దయచేసి తర్వాతి సమయాన్ని ఎంచుకోండి.',
+  } : undefined,
+};
 ---
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-  <form id="booking-form" class="space-y-8 rounded-[2rem] bg-white p-5 shadow-soft ring-1 ring-blush-line sm:p-8" novalidate>
+  <form id="booking-form" data-i18n={JSON.stringify(i18n)} class="space-y-8 rounded-[2rem] bg-white p-5 shadow-soft ring-1 ring-blush-line sm:p-8" novalidate>
     <fieldset>
-      <legend class="font-display text-xl font-semibold text-ink">Patient details</legend>
+      <legend class="font-display text-xl font-semibold text-ink">{tr('Patient details', 'రోగి వివరాలు')}</legend>
       <div class="mt-4 grid gap-4 sm:grid-cols-2">
         <div class="sm:col-span-2">
-          <label for="booking-name" class="field-label">Full name <span class="text-maroon">*</span></label>
-          <input id="booking-name" name="name" data-field="name" type="text" autocomplete="name" class="field" placeholder="e.g. Lakshmi Reddy" required aria-describedby="err-name" />
+          <label for="booking-name" class="field-label">{tr('Full name', 'పూర్తి పేరు')} <span class="text-maroon">*</span></label>
+          <input id="booking-name" name="name" data-field="name" type="text" autocomplete="name" class="field" placeholder={tr('e.g. Lakshmi Reddy', 'ఉదా. లక్ష్మి రెడ్డి')} required aria-describedby="err-name" />
           <p id="err-name" class="field-error" data-error="name" hidden></p>
         </div>
         <div class="sm:col-span-2">
-          <label for="booking-phone" class="field-label">Mobile number <span class="text-maroon">*</span></label>
+          <label for="booking-phone" class="field-label">{tr('Mobile number', 'మొబైల్ నంబర్')} <span class="text-maroon">*</span></label>
           <div class="flex">
             <span class="inline-flex items-center rounded-l-xl border border-r-0 border-ink/20 bg-blush px-3 text-sm text-ink/70">+91</span>
-            <input id="booking-phone" name="phone" data-field="phone" type="tel" inputmode="numeric" autocomplete="tel-national" class="field rounded-l-none" placeholder="10-digit mobile number" required aria-describedby="err-phone" />
+            <input id="booking-phone" name="phone" data-field="phone" type="tel" inputmode="numeric" autocomplete="tel-national" class="field rounded-l-none" placeholder={tr('10-digit mobile number', '10 అంకెల మొబైల్ నంబర్')} required aria-describedby="err-phone" />
           </div>
           <p id="err-phone" class="field-error" data-error="phone" hidden></p>
         </div>
         <div>
-          <label for="booking-age" class="field-label">Age <span class="font-normal text-ink/50">(optional)</span></label>
-          <input id="booking-age" name="age" type="number" inputmode="numeric" min="1" max="120" class="field" placeholder="e.g. 29" />
+          <label for="booking-age" class="field-label">{tr('Age', 'వయస్సు')} <span class="font-normal text-ink/50">{tr('(optional)', '(ఐచ్ఛికం)')}</span></label>
+          <input id="booking-age" name="age" type="number" inputmode="numeric" min="1" max="120" class="field" placeholder={tr('e.g. 29', 'ఉదా. 29')} />
         </div>
         <div>
-          <label for="booking-gender" class="field-label">Gender <span class="font-normal text-ink/50">(optional)</span></label>
+          <label for="booking-gender" class="field-label">{tr('Gender', 'లింగం')} <span class="font-normal text-ink/50">{tr('(optional)', '(ఐచ్ఛికం)')}</span></label>
           <select id="booking-gender" name="gender" class="field">
-            <option value="">Prefer not to say</option>
-            <option>Female</option>
-            <option>Male</option>
-            <option>Other</option>
+            <option value="">{tr('Prefer not to say', 'చెప్పకూడదనుకుంటున్నాను')}</option>
+            <option value="Female">{tr('Female', 'స్త్రీ')}</option>
+            <option value="Male">{tr('Male', 'పురుషుడు')}</option>
+            <option value="Other">{tr('Other', 'ఇతరులు')}</option>
           </select>
         </div>
       </div>
     </fieldset>
 
     <fieldset data-field="service" tabindex="-1">
-      <legend class="font-display text-xl font-semibold text-ink">Department or service</legend>
+      <legend class="font-display text-xl font-semibold text-ink">{tr('Department or service', 'విభాగం లేదా సేవ')}</legend>
       <div id="service-chips" class="mt-4 grid gap-2 sm:grid-cols-2"></div>
     </fieldset>
 
     <fieldset>
-      <legend class="font-display text-xl font-semibold text-ink">Preferred date and time</legend>
+      <legend class="font-display text-xl font-semibold text-ink">{tr('Preferred date and time', 'అనుకూలమైన తేదీ & సమయం')}</legend>
       <div class="mt-4 max-w-xs">
-        <label for="booking-date" class="field-label">Date <span class="text-maroon">*</span></label>
+        <label for="booking-date" class="field-label">{tr('Date', 'తేదీ')} <span class="text-maroon">*</span></label>
         <input id="booking-date" name="date" data-field="date" type="date" class="field" required aria-describedby="err-date" />
         <p id="err-date" class="field-error" data-error="date" hidden></p>
       </div>
       <div class="mt-6" data-field="slot" tabindex="-1">
-        <p class="field-label">Time slot <span class="text-maroon">*</span></p>
-        <div id="slot-grid" class="space-y-4" role="group" aria-label="Available time slots"></div>
+        <p class="field-label">{tr('Time slot', 'సమయం')} <span class="text-maroon">*</span></p>
+        <div id="slot-grid" class="space-y-4" role="group" aria-label={tr('Available time slots', 'అందుబాటులో ఉన్న సమయాలు')}></div>
         <p class="field-error" data-error="slot" hidden></p>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend class="font-display text-xl font-semibold text-ink">Symptoms or notes <span class="text-sm font-normal text-ink/50">(optional)</span></legend>
-      <label for="booking-notes" class="sr-only">Symptoms or notes</label>
-      <textarea id="booking-notes" name="notes" rows="3" maxlength="500" class="field mt-4" placeholder="Briefly describe your concern, e.g. irregular periods, trying to conceive for 2 years"></textarea>
+      <legend class="font-display text-xl font-semibold text-ink">{tr('Symptoms or notes', 'లక్షణాలు లేదా గమనికలు')} <span class="text-sm font-normal text-ink/50">{tr('(optional)', '(ఐచ్ఛికం)')}</span></legend>
+      <label for="booking-notes" class="sr-only">{tr('Symptoms or notes', 'లక్షణాలు లేదా గమనికలు')}</label>
+      <textarea id="booking-notes" name="notes" rows="3" maxlength="500" class="field mt-4" placeholder={tr('Briefly describe your concern, e.g. irregular periods, trying to conceive for 2 years', 'మీ సమస్యను క్లుప్తంగా రాయండి, ఉదా. పీరియడ్స్ క్రమం తప్పడం, 2 సంవత్సరాలుగా గర్భం కోసం ప్రయత్నిస్తున్నాం')}></textarea>
     </fieldset>
 
     <button id="booking-submit" type="submit" class="btn-wa w-full whitespace-normal py-4 text-center text-base">
       <Icon name="whatsapp" class="h-6 w-6" />
-      Send booking on WhatsApp
+      {tr('Send booking on WhatsApp', 'WhatsApp లో బుకింగ్ పంపండి')}
     </button>
-    <p class="-mt-4 text-center text-sm text-ink/60">WhatsApp opens with your details filled in. Nothing is sent until you press send.</p>
+    <p class="-mt-4 text-center text-sm text-ink/60">{tr('WhatsApp opens with your details filled in. Nothing is sent until you press send.', 'మీ వివరాలతో WhatsApp తెరుచుకుంటుంది. మీరు సెండ్ నొక్కే వరకు ఏదీ పంపబడదు.')}</p>
   </form>
 
   <aside class="lg:sticky lg:top-28 lg:self-start" aria-labelledby="preview-title">
@@ -72,18 +89,18 @@ import Icon from './Icon.astro';
       <div class="flex items-center gap-3 bg-[#075E54] px-5 py-3 text-white">
         <span class="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-sm font-bold">RH</span>
         <div>
-          <p id="preview-title" class="text-sm font-semibold">Message preview</p>
-          <p class="text-xs text-white/75">To Rohan Hospital, +91 97041 55550</p>
+          <p id="preview-title" class="text-sm font-semibold">{tr('Message preview', 'మెసేజ్ ప్రివ్యూ')}</p>
+          <p class="text-xs text-white/75">{tr('To Rohan Hospital, +91 97041 55550', 'రోహన్ హాస్పిటల్‌కు, +91 97041 55550')}</p>
         </div>
       </div>
       <div class="bg-[#ECE5DD] p-4 sm:p-5">
         <div class="relative ml-auto max-w-[95%] rounded-xl rounded-tr-none bg-[#DCF8C6] p-3.5 shadow-sm">
-          <div id="wa-preview" class="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-ink"></div>
+          <div id="wa-preview" lang="en" class="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-ink"></div>
         </div>
       </div>
     </div>
     <p class="mt-4 text-center text-sm text-ink/60">
-      Prefer to talk? Call <a href="tel:+919704155550" class="link">97041 55550</a> or <a href="tel:+919676603113" class="link">96766 03113</a>
+      {tr('Prefer to talk? Call', 'మాట్లాడాలనుకుంటున్నారా? కాల్ చేయండి:')} <a href="tel:+919704155550" class="link">97041 55550</a> {tr('or', 'లేదా')} <a href="tel:+919676603113" class="link">96766 03113</a>
     </p>
   </aside>
 </div>

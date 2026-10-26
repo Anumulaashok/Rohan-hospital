@@ -2,31 +2,33 @@
 import Icon from './Icon.astro';
 import { REVIEWS } from '../data/reviews.js';
 import { GOOGLE_REVIEWS } from '../config/hospital.js';
+import { useLang } from '../i18n/index.js';
 
 interface Props { limit?: number }
 const { limit } = Astro.props;
+const { lang, tr } = useLang(Astro.url);
 const items = limit ? REVIEWS.slice(0, limit) : REVIEWS;
 const initials = (name: string) => name.split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
 ---
 <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
   <div class="max-w-2xl">
-    <h2 class="section-title">Families who trusted us with their story</h2>
-    <p class="lede">Reviews left by patients on Google.</p>
+    <h2 class="section-title">{tr('Families who trusted us with their story', 'తమ కథను మాకు అప్పగించిన కుటుంబాలు')}</h2>
+    <p class="lede">{tr('Reviews left by patients on Google.', 'గూగుల్‌లో రాసిన సమీక్షలు, అసలు రాసిన విధంగానే (ఆంగ్లంలో) చూపబడ్డాయి.')}</p>
   </div>
   <a href={GOOGLE_REVIEWS.readUrl} target="_blank" rel="noopener" class="flex items-center gap-4 rounded-2xl bg-white px-5 py-4 ring-1 ring-blush-line transition-colors hover:ring-maroon/40">
     <span class="font-display text-5xl font-bold text-ink">{GOOGLE_REVIEWS.rating.toFixed(1)}</span>
     <span>
-      <span class="flex gap-0.5 text-turmeric" aria-label={`Rated ${GOOGLE_REVIEWS.rating} out of 5`}>
+      <span class="flex gap-0.5 text-turmeric" aria-label={tr(`Rated ${GOOGLE_REVIEWS.rating} out of 5`, `5 కి ${GOOGLE_REVIEWS.rating} రేటింగ్`)}>
         {[1, 2, 3, 4].map(() => <Icon name="star" class="h-4 w-4 fill-current" />)}
         <Icon name="star" class="h-4 w-4" />
       </span>
-      <span class="mt-1 block text-sm text-ink/60">{GOOGLE_REVIEWS.count} Google reviews, as of {GOOGLE_REVIEWS.asOf}</span>
+      <span class="mt-1 block text-sm text-ink/60">{tr(`${GOOGLE_REVIEWS.count} Google reviews, as of ${GOOGLE_REVIEWS.asOf}`, `${GOOGLE_REVIEWS.count} గూగుల్ సమీక్షలు (${GOOGLE_REVIEWS.asOf} నాటికి)`)}</span>
     </span>
   </a>
 </div>
 <div class="mt-10 columns-1 gap-5 sm:columns-2 lg:columns-3">
   {items.map((r) => (
-    <figure class="mb-5 break-inside-avoid rounded-3xl bg-white p-6 ring-1 ring-blush-line">
+    <figure class="mb-5 break-inside-avoid rounded-3xl bg-white p-6 ring-1 ring-blush-line" lang="en">
       <blockquote class="text-[16px] leading-relaxed text-ink">“{r.text}”</blockquote>
       <figcaption class="mt-5 flex items-center gap-3">
         <span class="grid h-10 w-10 place-items-center rounded-full bg-blush text-sm font-semibold text-maroon" aria-hidden="true">{initials(r.name)}</span>
@@ -36,6 +38,6 @@ const initials = (name: string) => name.split(/\s+/).slice(0, 2).map((w) => w[0]
   ))}
 </div>
 <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-  <a href={GOOGLE_REVIEWS.writeUrl} target="_blank" rel="noopener" class="btn-primary"><Icon name="star" class="h-4 w-4" />Write a Google review</a>
-  <a href={GOOGLE_REVIEWS.readUrl} target="_blank" rel="noopener" class="btn-outline">Read all reviews on Google</a>
+  <a href={GOOGLE_REVIEWS.writeUrl} target="_blank" rel="noopener" class="btn-primary"><Icon name="star" class="h-4 w-4" />{tr('Write a Google review', 'గూగుల్ సమీక్ష రాయండి')}</a>
+  <a href={GOOGLE_REVIEWS.readUrl} target="_blank" rel="noopener" class="btn-outline">{tr('Read all reviews on Google', 'అన్ని సమీక్షలు గూగుల్‌లో చూడండి')}</a>
 </div>

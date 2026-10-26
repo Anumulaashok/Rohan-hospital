@@ -54,6 +54,7 @@
 - OP hours: 10:00 AM – 1:00 PM and 5:00 PM – 8:30 PM; maternity and emergency 24/7
 
 ## Pages
+All pages are also available in Telugu under /te/ (for example /te/doctors/).
 - Doctors: /doctors/
 - Treatments: /treatments/
 - Facilities: /facilities/

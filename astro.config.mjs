@@ -5,5 +5,5 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: process.env.SITE_URL || 'https://www.rohanhospitalknr.in',
   prefetch: true,
-  integrations: [sitemap()],
+  integrations: [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en-IN', te: 'te-IN' } } })],
 });

@@ -3,50 +3,57 @@ import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { HOSPITAL, HOURS, SOCIAL, EMAIL, MAP_DIRECTIONS_URL } from '../config/hospital.js';
 import { NAV } from '../lib/nav.js';
+import { useLang } from '../i18n/index.js';
+import { hoursFor, addressFor } from '../i18n/common.js';
 import logo from '../assets/images/site/logo.png';
+
+const { lang, tr, link } = useLang(Astro.url);
 ---
 <footer class="bg-maroon-900 text-white/75">
   <div class="container-x grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
     <div>
       <div class="flex items-center gap-3">
         <Image src={logo} alt="" width={48} height={48} class="h-12 w-12 rounded-full bg-white" />
-        <p class="font-display text-xl font-bold text-white" style="font-stretch:115%">Rohan Hospital</p>
+        <p class="font-display text-xl font-bold text-white" style="font-stretch:115%">{tr('Rohan Hospital', 'రోహన్ హాస్పిటల్')}</p>
       </div>
-      <p class="mt-4 text-sm">Rohan Fertility (IVF) Centre. Fertility, maternity and laparoscopic care for families in Karimnagar for over a decade.</p>
+      <p class="mt-4 text-sm">{tr(
+        'Rohan Fertility (IVF) Centre. Fertility, maternity and laparoscopic care for families in Karimnagar for over a decade.',
+        'రోహన్ ఫెర్టిలిటీ (IVF) సెంటర్. పదేళ్లకు పైగా కరీంనగర్ కుటుంబాలకు ఫెర్టిలిటీ, ప్రసూతి, లాపరోస్కోపిక్ వైద్య సేవలు.',
+      )}</p>
       <p class="te mt-3 text-sm text-white/60" lang="te">మాతృత్వం ఒక వరం… మీకూ ఉంది ఆ అవకాశం</p>
       <ul class="mt-5 flex gap-2">
         {SOCIAL.map((s) => (
-          <li><a href={s.url} target="_blank" rel="noopener" class="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20" aria-label={`Rohan Hospital on ${s.name}`}><Icon name={s.icon} class="h-4 w-4" /></a></li>
+          <li><a href={s.url} target="_blank" rel="noopener" class="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20" aria-label={tr(`Rohan Hospital on ${s.name}`, `${s.name} లో రోహన్ హాస్పిటల్`)}><Icon name={s.icon} class="h-4 w-4" /></a></li>
         ))}
       </ul>
     </div>
     <div class="text-sm">
-      <h2 class="font-sans text-sm font-semibold text-white">Visit</h2>
-      <address class="mt-3 not-italic">{HOSPITAL.address}</address>
-      <a href={MAP_DIRECTIONS_URL} target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1.5 font-semibold text-white hover:underline"><Icon name="navigation" class="h-4 w-4" />Get directions</a>
+      <h2 class="font-sans text-sm font-semibold text-white">{tr('Visit', 'చిరునామా')}</h2>
+      <address class="mt-3 not-italic">{addressFor(lang, HOSPITAL.address)}</address>
+      <a href={MAP_DIRECTIONS_URL} target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1.5 font-semibold text-white hover:underline"><Icon name="navigation" class="h-4 w-4" />{tr('Get directions', 'దారి చూపించు')}</a>
     </div>
     <div class="text-sm">
-      <h2 class="font-sans text-sm font-semibold text-white">Hours</h2>
+      <h2 class="font-sans text-sm font-semibold text-white">{tr('Hours', 'సమయాలు')}</h2>
       <dl class="mt-3 space-y-2">
-        {HOURS.map((h) => (<div><dt class="text-white/55">{h.label}</dt><dd>{h.value}</dd></div>))}
+        {hoursFor(lang, HOURS).map((h) => (<div><dt class="text-white/55">{h.label}</dt><dd>{h.value}</dd></div>))}
       </dl>
     </div>
     <div class="text-sm">
-      <h2 class="font-sans text-sm font-semibold text-white">Contact</h2>
+      <h2 class="font-sans text-sm font-semibold text-white">{tr('Contact', 'సంప్రదించండి')}</h2>
       <ul class="mt-3 space-y-1.5">
         {HOSPITAL.phones.map((p) => (<li><a href={`tel:${p.tel}`} class="hover:text-white">{p.label}</a></li>))}
         <li><a href={`mailto:${EMAIL}`} class="hover:text-white">{EMAIL}</a></li>
       </ul>
-      <h2 class="mt-6 font-sans text-sm font-semibold text-white">Explore</h2>
+      <h2 class="mt-6 font-sans text-sm font-semibold text-white">{tr('Explore', 'పేజీలు')}</h2>
       <ul class="mt-3 grid grid-cols-2 gap-1.5">
-        {NAV.map((n) => (<li><a href={n.href} class="hover:text-white">{n.label}</a></li>))}
+        {NAV.map((n) => (<li><a href={link(n.href)} class="hover:text-white">{n[lang]}</a></li>))}
       </ul>
     </div>
   </div>
   <div class="border-t border-white/10">
     <div class="container-x flex flex-col items-center gap-2 py-5 text-center text-xs text-white/55 sm:flex-row sm:justify-between sm:text-left">
-      <p>© <span id="year">{new Date().getFullYear()}</span> Rohan Hospital &amp; Rohan Fertility (IVF) Centre, Karimnagar. All rights reserved.</p>
-      <p>Designed &amp; developed by <span class="font-semibold text-white/80">Anumula Ashok</span></p>
+      <p>© <span id="year">{new Date().getFullYear()}</span> {tr('Rohan Hospital & Rohan Fertility (IVF) Centre, Karimnagar. All rights reserved.', 'రోహన్ హాస్పిటల్ & రోహన్ ఫెర్టిలిటీ (IVF) సెంటర్, కరీంనగర్. సర్వ హక్కులు ప్రత్యేకించబడ్డాయి.')}</p>
+      <p>{tr('Designed & developed by', 'డిజైన్ & డెవలప్‌మెంట్:')} <span class="font-semibold text-white/80">Anumula Ashok</span></p>
     </div>
   </div>
 </footer>

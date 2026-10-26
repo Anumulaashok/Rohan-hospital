@@ -7,21 +7,22 @@ import { handleAppointmentSubmission } from './submit.js';
 
 const FIELD_ORDER = ['name', 'phone', 'service', 'date', 'slot'];
 
-function renderServiceChips(container) {
-  container.innerHTML = BOOKING_SERVICES.map(
-    (service, i) => `
+// Chip values stay in English so the WhatsApp message to the front desk is the same in every language.
+function renderServiceChips(container, services) {
+  container.innerHTML = services.map(
+    ({ value, label }, i) => `
       <label class="chip">
-        <input type="radio" name="service" value="${service}" class="sr-only peer" id="service-${i}" />
-        <span class="chip-face">${service}</span>
+        <input type="radio" name="service" value="${value}" class="sr-only peer" id="service-${i}" />
+        <span class="chip-face">${label}</span>
       </label>`,
   ).join('');
 }
 
-function renderSlotGrid(container) {
+function renderSlotGrid(container, groupLabels = {}) {
   container.innerHTML = SLOT_GROUPS.map(
     (group) => `
       <div>
-        <p class="mb-2 text-sm font-medium text-ink/60">${group.label}</p>
+        <p class="mb-2 text-sm font-medium text-ink/60">${groupLabels[group.id] || group.label}</p>
         <div class="grid grid-cols-3 gap-2 sm:grid-cols-4">
           ${group.slots.map((slot) => `<button type="button" class="slot-pill" data-slot="${slot}" aria-pressed="false">${slot}</button>`).join('')}
         </div>
@@ -59,9 +60,10 @@ export function initBookingForm(form) {
   const preview = document.getElementById('wa-preview');
   const dateInput = form.querySelector('#booking-date');
   const slotGrid = form.querySelector('#slot-grid');
+  const i18n = JSON.parse(form.dataset.i18n || '{}');
 
-  renderServiceChips(form.querySelector('#service-chips'));
-  renderSlotGrid(slotGrid);
+  renderServiceChips(form.querySelector('#service-chips'), i18n.services || BOOKING_SERVICES.map((s) => ({ value: s, label: s })));
+  renderSlotGrid(slotGrid, i18n.slotGroups);
   dateInput.min = todayISO();
 
   let showLiveErrors = false;
@@ -97,7 +99,7 @@ export function initBookingForm(form) {
       const past = state.date ? isSlotPast(state.date, pill.dataset.slot) : false;
       pill.disabled = past;
       pill.setAttribute('aria-pressed', String(pill.dataset.slot === state.slot));
-      pill.title = past ? 'This time has already passed today' : '';
+      pill.title = past ? i18n.pastSlot || 'This time has already passed today' : '';
     });
     if (state.slot && state.date && isSlotPast(state.date, state.slot)) {
       store.set({ slot: '' });
@@ -105,12 +107,12 @@ export function initBookingForm(form) {
     }
     renderPreview(preview, buildMessage(state));
     // Re-validate live only after a failed submit, so errors clear as the user fixes them.
-    if (showLiveErrors) showErrors(form, validateBooking(state));
+    if (showLiveErrors) showErrors(form, validateBooking(state, new Date(), i18n.errors));
   });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const { ok, errors } = await handleAppointmentSubmission(store.get());
+    const { ok, errors } = await handleAppointmentSubmission(store.get(), i18n.errors);
     showLiveErrors = !ok;
     showErrors(form, errors);
     if (!ok) {

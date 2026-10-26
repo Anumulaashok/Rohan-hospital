@@ -1,11 +1,14 @@
 ---
 import Icon from './Icon.astro';
-import { TREATMENT_GROUPS } from '../data/services.js';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
 
+const { lang } = useLang(Astro.url);
+const { treatmentGroups } = getContent(lang);
 const ICONS = ['flask', 'stethoscope', 'baby', 'scan'];
 ---
 <div class="grid gap-x-12 gap-y-4 lg:grid-cols-2">
-  {TREATMENT_GROUPS.map((group, i) => (
+  {treatmentGroups.map((group, i) => (
     <article class="flex gap-5 border-t border-blush-line py-7">
       <span class="arch grid h-16 w-14 shrink-0 place-items-center bg-blush text-maroon"><Icon name={ICONS[i]} class="h-7 w-7" /></span>
       <div>

@@ -8,8 +8,8 @@ export function redirectToWhatsApp(formData) {
   if (!win) window.location.href = url;
 }
 
-export async function handleAppointmentSubmission(formData) {
-  const errors = validateBooking(formData);
+export async function handleAppointmentSubmission(formData, messages) {
+  const errors = validateBooking(formData, new Date(), messages);
   if (Object.keys(errors).length) return { ok: false, errors };
 
   // Phase 1: immediate WhatsApp dispatch.

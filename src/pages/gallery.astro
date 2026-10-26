@@ -1,22 +1,4 @@
 ---
-import Base from '../layouts/Base.astro';
-import PageHeader from '../components/PageHeader.astro';
-import FamiliesStrip from '../components/FamiliesStrip.astro';
-import Reviews from '../components/Reviews.astro';
-import CtaBand from '../components/CtaBand.astro';
-import withTwins from '../assets/images/site/dr-sridevi-with-twins.jpg';
+import Gallery from '../views/Gallery.astro';
 ---
-<Base
-  title="Gallery & Patient Reviews | Rohan Hospital Karimnagar"
-  description="Photos from Rohan Hospital & Rohan Fertility (IVF) Centre, Karimnagar, and Google reviews from the families we have cared for."
-  image={withTwins}
->
-  <PageHeader te="మా కుటుంబాలు" title="Families and moments" intro="Photos from the hospital and reviews from the people we have cared for." />
-  <section class="section">
-    <div class="container-x"><FamiliesStrip /></div>
-  </section>
-  <section class="section bg-blush">
-    <div class="container-x"><Reviews /></div>
-  </section>
-  <CtaBand />
-</Base>
+<Gallery />

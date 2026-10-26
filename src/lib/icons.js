@@ -36,11 +36,12 @@ import navigation from 'lucide-static/icons/navigation.svg?raw';
 import bookOpen from 'lucide-static/icons/book-open.svg?raw';
 import flower from 'lucide-static/icons/flower-2.svg?raw';
 import receipt from 'lucide-static/icons/receipt-indian-rupee.svg?raw';
+import languages from 'lucide-static/icons/languages.svg?raw';
 import si_instagram from 'simple-icons/icons/instagram.svg?raw';
 import si_facebook from 'simple-icons/icons/facebook.svg?raw';
 import si_youtube from 'simple-icons/icons/youtube.svg?raw';
 import si_x from 'simple-icons/icons/x.svg?raw';
 import si_whatsapp from 'simple-icons/icons/whatsapp.svg?raw';
 
-export const STROKE_ICONS = { baby, flask, microscope, heartPulse, stethoscope, scan, bed, shield, clock, phone, mapPin, calendar, award, users, activity, sparkles, check, star, arrowRight, hospital, graduation, quote, menu, close, chevronDown, image, play, mail, heart, snowflake, thermometer, wind, zap, navigation, bookOpen, flower, receipt };
+export const STROKE_ICONS = { baby, flask, microscope, heartPulse, stethoscope, scan, bed, shield, clock, phone, mapPin, calendar, award, users, activity, sparkles, check, star, arrowRight, hospital, graduation, quote, menu, close, chevronDown, image, play, mail, heart, snowflake, thermometer, wind, zap, navigation, bookOpen, flower, receipt, languages };
 export const BRAND_ICONS = { instagram: si_instagram, facebook: si_facebook, youtube: si_youtube, x: si_x, whatsapp: si_whatsapp };

@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import TreatmentGroups from '../components/TreatmentGroups.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
+import checkup from '../assets/images/site/stock/pregnancy-checkup.jpg';
+
+const { lang, tr, link } = useLang(Astro.url);
+const { clinics } = getContent(lang);
+---
+<Base
+  title={tr('IVF, IUI, ICSI, Painless Delivery & Laparoscopy in Karimnagar | Rohan Hospital', 'కరీంనగర్‌లో IVF, IUI, ICSI, నొప్పిలేని ప్రసవం & లాపరోస్కోపీ | రోహన్ హాస్పిటల్')}
+  description={tr(
+    'Fertility treatment (IVF, ICSI, IUI), maternity and painless delivery, high-risk pregnancy care, laparoscopy, hysteroscopy and in-house scans at Rohan Hospital, Karimnagar.',
+    'రోహన్ హాస్పిటల్, కరీంనగర్‌లో ఫెర్టిలిటీ చికిత్స (IVF, ICSI, IUI), ప్రసూతి & నొప్పిలేని ప్రసవం, హై-రిస్క్ గర్భధారణ సంరక్షణ, లాపరోస్కోపీ, హిస్టెరోస్కోపీ, ఆసుపత్రిలోనే స్కాన్‌లు.',
+  )}
+  image={checkup}
+>
+  <PageHeader
+    kicker={{ en: 'Treatments', te: 'చికిత్సలు' }}
+    title={tr('Treatments and services', 'చికిత్సలు & సేవలు')}
+    intro={tr(
+      'Everything from a first fertility consultation to delivery, surgery and scans, planned by one team so you are not sent from place to place.',
+      'మొదటి ఫెర్టిలిటీ కన్సల్టేషన్ నుంచి ప్రసవం, సర్జరీ, స్కాన్‌ల వరకు అన్నీ ఒకే టీమ్ ప్లాన్ చేస్తుంది, కాబట్టి మీరు ఒక చోటి నుంచి మరో చోటికి తిరగాల్సిన అవసరం ఉండదు.',
+    )}
+  />
+
+  <section class="section">
+    <div class="container-x"><TreatmentGroups /></div>
+  </section>
+
+  <section class="section bg-blush">
+    <div class="container-x grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div>
+        <h2 class="section-title">{tr('Speciality clinics', 'ప్రత్యేక క్లినిక్‌లు')}</h2>
+        <p class="lede">{tr('Focused clinics for specific stages of life and specific concerns, for women and men.', 'జీవితంలోని ప్రత్యేక దశలకు, ప్రత్యేక సమస్యలకు ప్రత్యేక క్లినిక్‌లు; స్త్రీలకు, పురుషులకు.')}</p>
+      </div>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {clinics.map((c) => (
+          <li class="flex items-center gap-3 rounded-2xl bg-white px-5 py-4 text-ink ring-1 ring-blush-line">
+            <Icon name="check" class="h-5 w-5 shrink-0 text-maroon" />{c}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x max-w-3xl">
+      <h2 class="section-title">{tr('Not sure which treatment you need?', 'మీకు ఏ చికిత్స అవసరమో తెలియడం లేదా?')}</h2>
+      <p class="lede">{tr(
+        'That is what the first consultation is for. Dr. Sridevi reviews your history and reports, and explains which tests and treatments make sense for you.',
+        'మొదటి కన్సల్టేషన్ అందుకే. డా. శ్రీదేవి గారు మీ వైద్య చరిత్ర, రిపోర్టులను పరిశీలించి, మీకు ఏ పరీక్షలు, చికిత్సలు సరిపోతాయో వివరిస్తారు.',
+      )}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a href={link('/book/')} class="btn-primary"><Icon name="calendar" class="h-5 w-5" />{tr('Book a consultation', 'కన్సల్టేషన్ బుక్ చేయండి')}</a>
+        <a href={link('/tariffs/')} class="btn-outline">{tr('See consultation and procedure charges', 'కన్సల్టేషన్ & ప్రొసీజర్ ఛార్జీలు చూడండి')}</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

@@ -2,34 +2,40 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import portrait from '../assets/images/site/dr-sridevi.jpg';
-import { DOCTOR } from '../data/doctor.js';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
 
 interface Props { headingLevel?: 'h1' | 'h2' }
 const { headingLevel = 'h2' } = Astro.props;
 const Heading = headingLevel;
+const { lang, tr } = useLang(Astro.url);
+const { doctor } = getContent(lang);
 ---
 <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
   <div class="relative mx-auto w-full max-w-sm">
     <div class="arch absolute inset-0 translate-x-4 translate-y-4 border-2 border-lotus/30" aria-hidden="true"></div>
-    <Image src={portrait} alt="Dr. Anamalla Sridevi Naresh, Clinical Director" widths={[360, 520]} sizes="(min-width: 1024px) 384px, 90vw" class="arch relative aspect-[5/6] w-full object-cover object-top shadow-soft" />
+    <Image src={portrait} alt={tr('Dr. Anamalla Sridevi Naresh, Clinical Director', 'డా. ఎనమల్ల శ్రీదేవి నరేష్, క్లినికల్ డైరెక్టర్')} widths={[360, 520]} sizes="(min-width: 1024px) 384px, 90vw" class="arch relative aspect-[5/6] w-full object-cover object-top shadow-soft" />
   </div>
   <div>
-    <Heading class="section-title">Dr. Anamalla Sridevi Naresh</Heading>
-    <p class="mt-2 text-lg font-medium text-maroon">{DOCTOR.qualifications.join(', ')}</p>
-    <p class="mt-1 text-ink/70">Clinical Director, fertility (IVF) specialist, gynaecologist and obstetrician</p>
+    <Heading class="section-title">{doctor.displayName}</Heading>
+    <p class="mt-2 text-lg font-medium text-maroon">{doctor.qualifications.join(', ')}</p>
+    <p class="mt-1 text-ink/70">{doctor.role}</p>
     <ul class="mt-7 grid gap-3 sm:grid-cols-2">
       <li class="flex gap-3 rounded-2xl bg-blush p-4">
         <Icon name="graduation" class="mt-0.5 h-6 w-6 shrink-0 text-maroon" />
-        <span class="text-[15px] text-ink"><strong class="block font-semibold">Homerton University, London</strong>Master of Reproductive Medicine</span>
+        <span class="text-[15px] text-ink"><strong class="block font-semibold">{tr('Homerton University, London', 'హోమర్టన్ యూనివర్సిటీ, లండన్')}</strong>{tr('Master of Reproductive Medicine', 'మాస్టర్ ఆఫ్ రిప్రొడక్టివ్ మెడిసిన్')}</span>
       </li>
       <li class="flex gap-3 rounded-2xl bg-blush p-4">
         <Icon name="award" class="mt-0.5 h-6 w-6 shrink-0 text-maroon" />
-        <span class="text-[15px] text-ink"><strong class="block font-semibold">Cleveland Clinic, USA</strong>Accredited hands-on IVF training</span>
+        <span class="text-[15px] text-ink"><strong class="block font-semibold">{tr('Cleveland Clinic, USA', 'క్లీవ్‌ల్యాండ్ క్లినిక్, USA')}</strong>{tr('Accredited hands-on IVF training', 'అక్రెడిటెడ్ IVF ప్రాక్టికల్ శిక్షణ')}</span>
       </li>
     </ul>
     <blockquote class="mt-8 flex gap-3 text-lg leading-relaxed text-ink">
       <Icon name="quote" class="h-7 w-7 shrink-0 text-lotus" />
-      <p>Every couple’s story is different. We listen first, explain every option honestly, and choose the gentlest treatment that gives you the best chance of holding your baby.</p>
+      <p>{tr(
+        'Every couple’s story is different. We listen first, explain every option honestly, and choose the gentlest treatment that gives you the best chance of holding your baby.',
+        'ప్రతి దంపతుల కథ వేరు. ముందుగా మీ మాట వింటాం, ప్రతి అవకాశాన్ని నిజాయితీగా వివరిస్తాం, మీ బిడ్డను చేతుల్లోకి తీసుకునే అత్యుత్తమ అవకాశం ఇచ్చే అత్యంత సున్నితమైన చికిత్సను ఎంచుకుంటాం.',
+      )}</p>
     </blockquote>
     <slot />
   </div>

@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
+
+const { lang, tr, link } = useLang(Astro.url);
+const { insights } = getContent(lang);
+---
+<Base
+  title={tr('Fertility Insights: IVF, IUI, PCOS, AMH & More | Rohan Fertility Centre Karimnagar', 'ఫెర్టిలిటీ సమాచారం: IVF, IUI, PCOS, AMH & మరిన్ని | రోహన్ ఫెర్టిలిటీ సెంటర్ కరీంనగర్')}
+  description={tr(
+    'Plain-language guides on when to see a fertility specialist, IUI vs IVF vs ICSI, the IVF cycle, PCOS, AMH and semen analysis, fibroids and fertility myths.',
+    'ఫెర్టిలిటీ స్పెషలిస్ట్‌ను ఎప్పుడు కలవాలి, IUI vs IVF vs ICSI, IVF సైకిల్, PCOS, AMH & వీర్య పరీక్ష, ఫైబ్రాయిడ్లు, సంతానలేమి అపోహల గురించి సులభమైన భాషలో వ్యాసాలు.',
+  )}
+>
+  <PageHeader
+    kicker={{ en: 'Insights', te: 'తెలుసుకోండి' }}
+    title={tr('Fertility insights', 'ఫెర్టిలిటీ సమాచారం')}
+    intro={tr(
+      'Clear, practical answers to the questions couples ask us most, from when to seek help to what really happens in an IVF cycle.',
+      'ఎప్పుడు సహాయం తీసుకోవాలి నుంచి IVF సైకిల్‌లో నిజంగా ఏమి జరుగుతుంది వరకు, దంపతులు మమ్మల్ని ఎక్కువగా అడిగే ప్రశ్నలకు స్పష్టమైన సమాధానాలు.',
+    )}
+  />
+  <section class="section">
+    <div class="container-x">
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {insights.map((a) => (
+          <li>
+            <a href={link(`/insights/${a.slug}/`)} class="group flex h-full flex-col rounded-[2rem] bg-blush p-7 transition-colors hover:bg-blush-line/60">
+              <span class="text-sm font-semibold text-lotus">{a.tag}</span>
+              <h2 class="mt-2 text-2xl font-semibold leading-snug">{a.title}</h2>
+              <p class="mt-3 flex-1 text-ink/70">{a.summary}</p>
+              <span class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-maroon">{tr('Read', 'చదవండి')}<Icon name="arrowRight" class="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-10 text-center text-sm text-ink/60">{tr(
+        'This information is for general education and is not a substitute for medical advice. Please consult a doctor for guidance specific to you.',
+        'ఈ సమాచారం సాధారణ అవగాహన కోసం మాత్రమే, వైద్య సలహాకు ప్రత్యామ్నాయం కాదు. మీకు సంబంధించిన సలహా కోసం దయచేసి డాక్టర్‌ను సంప్రదించండి.',
+      )}</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

@@ -1,6 +1,5 @@
 import { HOSPITAL, GEO, GOOGLE_MAPS_URL, EMAIL, SOCIAL } from '../config/hospital.js';
 import { DOCTOR } from '../data/doctor.js';
-import { FAQS } from '../data/faqs.js';
 import { TREATMENT_GROUPS } from '../data/services.js';
 import { SPECIALISTS } from '../data/doctors.js';
 
@@ -67,12 +66,13 @@ function doctorNode(site, images) {
 }
 
 // Rating/review markup is intentionally omitted: Google treats self-served LocalBusiness reviews as ineligible.
-export function buildSchema({ site, images, faq = false, extra = [] }) {
+export function buildSchema({ site, images, faqs = null, lang = 'en', extra = [] }) {
   const graph = [hospitalNode(site, images), doctorNode(site, images), ...extra];
-  if (faq) {
+  if (faqs) {
     graph.push({
       '@type': 'FAQPage',
-      mainEntity: FAQS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+      inLanguage: lang,
+      mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
     });
   }
   // Escape "<" so JSON content cannot close the script tag.

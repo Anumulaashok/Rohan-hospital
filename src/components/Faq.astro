@@ -1,14 +1,18 @@
 ---
 import Icon from './Icon.astro';
-import { FAQS } from '../data/faqs.js';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
+
+const { lang, tr } = useLang(Astro.url);
+const { faqs } = getContent(lang);
 ---
 <div class="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
   <div>
-    <h2 class="section-title">Common questions</h2>
-    <p class="lede">Can’t find your answer? Call <a href="tel:+919704155550" class="link">97041 55550</a>.</p>
+    <h2 class="section-title">{tr('Common questions', 'తరచుగా అడిగే ప్రశ్నలు')}</h2>
+    <p class="lede">{tr('Can’t find your answer? Call', 'మీ ప్రశ్నకు సమాధానం దొరకలేదా? కాల్ చేయండి:')} <a href="tel:+919704155550" class="link">97041 55550</a>{tr('.', '')}</p>
   </div>
   <div class="divide-y divide-blush-line border-y border-blush-line">
-    {FAQS.map((f, i) => (
+    {faqs.map((f, i) => (
       <details class="group" open={i === 0}>
         <summary class="flex cursor-pointer list-none items-start justify-between gap-4 py-5">
           <h3 class="font-sans text-[17px] font-semibold text-ink">{f.q}</h3>

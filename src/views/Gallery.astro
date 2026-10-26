@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FamiliesStrip from '../components/FamiliesStrip.astro';
+import Reviews from '../components/Reviews.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { useLang } from '../i18n/index.js';
+import withTwins from '../assets/images/site/dr-sridevi-with-twins.jpg';
+
+const { tr } = useLang(Astro.url);
+---
+<Base
+  title={tr('Gallery & Patient Reviews | Rohan Hospital Karimnagar', 'గ్యాలరీ & సమీక్షలు | రోహన్ హాస్పిటల్ కరీంనగర్')}
+  description={tr(
+    'Photos from Rohan Hospital & Rohan Fertility (IVF) Centre, Karimnagar, and Google reviews from the families we have cared for.',
+    'రోహన్ హాస్పిటల్ & రోహన్ ఫెర్టిలిటీ (IVF) సెంటర్, కరీంనగర్ ఫోటోలు, మేము సంరక్షించిన కుటుంబాల గూగుల్ సమీక్షలు.',
+  )}
+  image={withTwins}
+>
+  <PageHeader
+    kicker={{ en: 'Our families', te: 'మా కుటుంబాలు' }}
+    title={tr('Families and moments', 'కుటుంబాలు & క్షణాలు')}
+    intro={tr('Photos from the hospital and reviews from the people we have cared for.', 'ఆసుపత్రి ఫోటోలు, మేము సంరక్షించిన వారి సమీక్షలు.')}
+  />
+  <section class="section">
+    <div class="container-x"><FamiliesStrip /></div>
+  </section>
+  <section class="section bg-blush">
+    <div class="container-x"><Reviews /></div>
+  </section>
+  <CtaBand />
+</Base>

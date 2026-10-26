@@ -1,10 +1,12 @@
 ---
 import Icon from './Icon.astro';
-import { FACILITIES } from '../data/facilities.js';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
 
 interface Props { limit?: number; cols?: 2 | 3 }
 const { limit, cols = 3 } = Astro.props;
-const items = limit ? FACILITIES.slice(0, limit) : FACILITIES;
+const { facilities } = getContent(useLang(Astro.url).lang);
+const items = limit ? facilities.slice(0, limit) : facilities;
 ---
 <ul class:list={['grid gap-x-10 gap-y-8 sm:grid-cols-2', cols === 3 && 'lg:grid-cols-3']}>
   {items.map((f) => (

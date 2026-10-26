@@ -5,6 +5,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileBar from '../components/MobileBar.astro';
 import { buildSchema } from '../lib/schema.js';
+import { useLang, basePath, localize } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
 import logo from '../assets/images/site/logo.png';
 import building from '../assets/images/site/hospital-building.jpg';
 import doctorPhoto from '../assets/images/site/dr-sridevi.jpg';
@@ -19,7 +21,14 @@ interface Props {
 }
 const { title, description, image, faq = false, schema = [], noindex = false } = Astro.props;
 
+const { lang, tr } = useLang(Astro.url);
 const site = Astro.site!.href;
+const base = basePath(Astro.url.pathname);
+const alternates = [
+  { hreflang: 'en', href: new URL(localize(base, 'en'), Astro.site).href },
+  { hreflang: 'te', href: new URL(localize(base, 'te'), Astro.site).href },
+  { hreflang: 'x-default', href: new URL(localize(base, 'en'), Astro.site).href },
+];
 const abs = (src: string) => new URL(src, Astro.site).href;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
@@ -35,30 +44,32 @@ const hospitalImg = image ? await getImage({ src: building, width: 1200, format:
 const jsonLd = buildSchema({
   site,
   images: { hospital: abs(hospitalImg.src), logo: abs(logoImg.src), doctor: abs(doctorImg.src) },
-  faq,
+  faqs: faq ? getContent(lang).faqs : null,
+  lang,
   extra: schema,
 });
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {!noindex && alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
     {!noindex && <meta name="robots" content="index, follow, max-image-preview:large" />}
     <meta name="geo.region" content="IN-TG" />
     <meta name="geo.placename" content="Karimnagar" />
     <meta name="geo.position" content="18.450288;79.1333762" />
     <meta name="theme-color" content="#6B0F24" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Rohan Hospital & Rohan Fertility (IVF) Centre" />
+    <meta property="og:site_name" content={tr('Rohan Hospital & Rohan Fertility (IVF) Centre', 'రోహన్ హాస్పిటల్ & రోహన్ ఫెర్టిలిటీ (IVF) సెంటర్')} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={abs(og.src)} />
-    <meta property="og:locale" content="en_IN" />
+    <meta property="og:locale" content={tr('en_IN', 'te_IN')} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href={favicon.src} />
     <link rel="apple-touch-icon" href={touchIcon.src} />
@@ -66,11 +77,11 @@ const jsonLd = buildSchema({
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@100..125,500..800&family=Anek+Telugu:wght@500..700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wdth,wght@100..125,500..800&family=Anek+Telugu:wdth,wght@100..125,500..700&family=Noto+Sans+Telugu:wght@400..700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="pb-[76px] md:pb-0">
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2">{tr('Skip to content', 'కంటెంట్‌కు వెళ్లండి')}</a>
     <Header />
     <main id="main">
       <slot />
@@ -79,7 +90,7 @@ const jsonLd = buildSchema({
     <MobileBar />
 
     <dialog id="lightbox" class="max-h-[92vh] w-[min(96vw,1400px)] max-w-none rounded-2xl bg-transparent p-0 backdrop:bg-black/80">
-      <button type="button" data-close class="absolute right-2 top-2 z-10 grid h-11 w-11 place-items-center rounded-full bg-white/90 text-ink shadow" aria-label="Close">
+      <button type="button" data-close class="absolute right-2 top-2 z-10 grid h-11 w-11 place-items-center rounded-full bg-white/90 text-ink shadow" aria-label={tr('Close', 'మూసివేయండి')}>
         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
       </button>
       <img src="" alt="" class="h-auto max-h-[92vh] w-full rounded-2xl object-contain" />

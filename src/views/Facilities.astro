@@ -1,0 +1,83 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Facilities from '../components/Facilities.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { TOUR_VIDEO_ID } from '../config/hospital.js';
+import { useLang } from '../i18n/index.js';
+import { getContent } from '../i18n/content.js';
+import tourThumb from '../assets/images/site/virtual-tour-thumb.jpg';
+
+const { lang, tr } = useLang(Astro.url);
+const photos = await Promise.all(
+  getContent(lang).hospitalPhotos.map(async (p) => ({ ...p, full: (await getImage({ src: p.src, width: 1600, format: 'webp' })).src })),
+);
+---
+<Base
+  title={tr('Facilities: IVF Lab, ICU, 3D Ultrasound & 24-Hour Lab | Rohan Hospital Karimnagar', 'సౌకర్యాలు: IVF ల్యాబ్, ICU, 3D అల్ట్రాసౌండ్ & 24 గంటల ల్యాబ్ | రోహన్ హాస్పిటల్ కరీంనగర్')}
+  description={tr(
+    'In-house IVF & ICSI lab with embryo banking, medical and surgical ICUs, Voluson S8 3D ultrasound, A/c delivery suite, 24-hour laboratory and cashless insurance at Rohan Hospital, Karimnagar.',
+    'రోహన్ హాస్పిటల్, కరీంనగర్‌లో పిండాల నిల్వతో IVF & ICSI ల్యాబ్, మెడికల్ & సర్జికల్ ICUలు, Voluson S8 3D అల్ట్రాసౌండ్, ఏసీ డెలివరీ సూట్, 24 గంటల ల్యాబ్, క్యాష్‌లెస్ ఇన్సూరెన్స్.',
+  )}
+>
+  <PageHeader
+    kicker={{ en: 'Facilities', te: 'సౌకర్యాలు' }}
+    title={tr('Facilities', 'సౌకర్యాలు')}
+    intro={tr('The equipment and rooms that let us handle fertility treatment, delivery, surgery and emergencies in one building.', 'ఫెర్టిలిటీ చికిత్స, ప్రసవం, సర్జరీ, అత్యవసర సేవలను ఒకే భవనంలో అందించేందుకు ఉన్న పరికరాలు, గదులు.')}
+  />
+
+  <section class="section">
+    <div class="container-x"><Facilities /></div>
+  </section>
+
+  <section class="section bg-blush">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="section-title">{tr('Take a look inside', 'లోపల ఒకసారి చూడండి')}</h2>
+        <p class="lede">{tr('A short video tour of the hospital, from reception to the wards.', 'రిసెప్షన్ నుంచి వార్డుల వరకు, ఆసుపత్రి చిన్న వీడియో టూర్.')}</p>
+      </div>
+      <div class="relative aspect-video overflow-hidden rounded-[2rem] bg-ink shadow-soft" data-tour={TOUR_VIDEO_ID} data-tour-title={tr('Rohan Hospital video tour', 'రోహన్ హాస్పిటల్ వీడియో టూర్')}>
+        <button type="button" class="group absolute inset-0 h-full w-full" aria-label={tr('Play the Rohan Hospital video tour', 'రోహన్ హాస్పిటల్ వీడియో టూర్ ప్లే చేయండి')}>
+          <Image src={tourThumb} alt="" class="h-full w-full object-cover opacity-90" />
+          <span class="absolute inset-0 grid place-items-center">
+            <span class="grid h-16 w-16 place-items-center rounded-full bg-white text-maroon shadow-soft transition-transform group-hover:scale-110"><Icon name="play" class="ml-1 h-7 w-7 fill-current" /></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x">
+      <h2 class="section-title">{tr('The hospital', 'ఆసుపత్రి')}</h2>
+      <ul class="mt-10 grid gap-5 md:grid-cols-3">
+        {photos.map((p) => (
+          <li>
+            <button type="button" class="block w-full overflow-hidden rounded-[2rem]" data-lightbox={p.full} data-lightbox-alt={p.alt} aria-label={`${tr('View photo', 'ఫోటో చూడండి')}: ${p.alt}`}>
+              <Image src={p.src} alt={p.alt} widths={[400, 700]} sizes="(min-width: 768px) 33vw, 92vw" class:list={['aspect-[4/3] w-full transition-transform duration-500 hover:scale-[1.03]', p.contain ? 'bg-white object-contain p-4' : 'object-cover']} />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<script>
+  // Load the YouTube player only after the visitor asks for it.
+  document.querySelectorAll<HTMLElement>('[data-tour]').forEach((box) => {
+    box.querySelector('button')?.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube-nocookie.com/embed/${box.dataset.tour}?autoplay=1&rel=0`;
+      frame.title = box.dataset.tourTitle || '';
+      frame.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+      frame.allowFullscreen = true;
+      frame.className = 'absolute inset-0 h-full w-full border-0';
+      box.replaceChildren(frame);
+    });
+  });
+</script>

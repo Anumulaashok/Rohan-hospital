@@ -1,0 +1,9 @@
+---
+import InsightArticle from '../../../views/InsightArticle.astro';
+import { INSIGHTS } from '../../../data/insights.js';
+
+export function getStaticPaths() {
+  return INSIGHTS.map((a) => ({ params: { slug: a.slug } }));
+}
+---
+<InsightArticle slug={Astro.params.slug} />

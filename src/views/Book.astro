@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import BookingForm from '../components/BookingForm.astro';
+import { useLang } from '../i18n/index.js';
+
+const { tr } = useLang(Astro.url);
+---
+<Base
+  title={tr('Book an Appointment with Dr. Sridevi Naresh | Rohan Hospital Karimnagar', 'డా. శ్రీదేవి నరేష్ గారితో అపాయింట్‌మెంట్ బుక్ చేయండి | రోహన్ హాస్పిటల్ కరీంనగర్')}
+  description={tr(
+    'Choose a date and time slot and send your appointment request to Rohan Hospital, Karimnagar on WhatsApp. Morning and evening OP available.',
+    'తేదీ, సమయం ఎంచుకుని మీ అపాయింట్‌మెంట్ అభ్యర్థనను WhatsApp ద్వారా రోహన్ హాస్పిటల్, కరీంనగర్‌కు పంపండి. ఉదయం, సాయంత్రం OP అందుబాటులో ఉంది.',
+  )}
+>
+  <PageHeader
+    kicker={{ en: 'Book an appointment', te: 'అపాయింట్‌మెంట్ బుక్ చేయండి' }}
+    title={tr('Book a visit', 'అపాయింట్‌మెంట్ బుక్ చేయండి')}
+    intro={tr(
+      'Fill in a few details and pick a slot. WhatsApp opens with your request ready to send, and the front desk confirms your visit.',
+      'కొన్ని వివరాలు నింపి, సమయాన్ని ఎంచుకోండి. మీ అభ్యర్థనతో WhatsApp తెరుచుకుంటుంది, ఫ్రంట్ డెస్క్ మీ అపాయింట్‌మెంట్‌ను నిర్ధారిస్తుంది.',
+    )}
+  />
+  <section class="section">
+    <div class="container-x"><BookingForm /></div>
+  </section>
+</Base>

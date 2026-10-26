@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Location from '../components/Location.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { useLang } from '../i18n/index.js';
+
+const { tr } = useLang(Astro.url);
+---
+<Base
+  title={tr('Contact & Directions | Rohan Hospital, Choppadandi Road, Karimnagar', 'సంప్రదించండి & దారి | రోహన్ హాస్పిటల్, చొప్పదండి రోడ్, కరీంనగర్')}
+  description={tr(
+    'Rohan Hospital & Rohan Fertility (IVF) Centre, 3-6-397, Choppadandi Rd, near Subhash Statue, Karimnagar. Call +91 97041 55550, 0878-2228222. OP hours 10 AM–1 PM and 5–8:30 PM; maternity 24/7.',
+    'రోహన్ హాస్పిటల్ & రోహన్ ఫెర్టిలిటీ (IVF) సెంటర్, 3-6-397, చొప్పదండి రోడ్, సుభాష్ విగ్రహం దగ్గర, కరీంనగర్. కాల్: +91 97041 55550, 0878-2228222. OP సమయాలు ఉదయం 10–1, సాయంత్రం 5–8:30; ప్రసూతి 24/7.',
+  )}
+  faq
+>
+  <section class="section bg-blush">
+    <div class="container-x"><Location headingLevel="h1" /></div>
+  </section>
+  <section class="section">
+    <div class="container-x"><Faq /></div>
+  </section>
+  <CtaBand />
+</Base>
