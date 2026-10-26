@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+import { FEATURED_VIDEOS, thumbnail } from '../data/videos.js';
+import { SOCIAL } from '../config/hospital.js';
+
+const channel = SOCIAL.find((s) => s.icon === 'youtube').url;
+// Second copy lets the auto-scroll wrap around without a visible jump.
+const loop = [...FEATURED_VIDEOS.map((v) => ({ ...v, clone: false })), ...FEATURED_VIDEOS.map((v) => ({ ...v, clone: true }))];
+---
+<div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+  <div>
+    <h2 class="section-title">Videos from Rohan Fertility Centre</h2>
+    <p class="lede">Short videos on PCOS, male fertility, pregnancy and more, in Telugu and English.</p>
+  </div>
+  <a href={channel} target="_blank" rel="noopener" class="btn-outline shrink-0"><Icon name="youtube" class="h-4 w-4" />Subscribe on YouTube</a>
+</div>
+<ul class="autoscroll -mx-4 mt-10 flex gap-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:mt-12 sm:gap-6 sm:px-0" data-autoscroll>
+  {loop.map((v) => (
+    <li class="w-[46vw] max-w-[210px] shrink-0 snap-start" data-clone={v.clone ? '' : undefined} aria-hidden={v.clone ? 'true' : undefined}>
+      <button type="button" class="group block w-full text-left" data-video={v.id} data-video-short={v.short ? '' : undefined} data-video-title={v.title} aria-label={`Play video: ${v.title}`} tabindex={v.clone ? -1 : undefined}>
+        <span class="relative block aspect-[9/16] overflow-hidden rounded-[1.5rem] bg-ink shadow-soft">
+          <img src={thumbnail(v)} alt="" loading="lazy" decoding="async" width="480" height="360" class="h-full w-full scale-[1.02] object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.07]" />
+          <span class="absolute inset-0 grid place-items-center">
+            <span class="grid h-12 w-12 place-items-center rounded-full bg-white/95 text-maroon shadow-soft transition-transform group-hover:scale-110"><Icon name="play" class="ml-0.5 h-5 w-5 fill-current" /></span>
+          </span>
+        </span>
+        <span class="mt-4 line-clamp-2 block min-h-[2.75rem] text-[15px] font-semibold leading-snug text-ink">{v.title}</span>
+      </button>
+    </li>
+  ))}
+</ul>
+
+<script>
+  import { initAutoScroll } from '../ui/autoscroll.js';
+  document.querySelectorAll<HTMLElement>('[data-autoscroll]').forEach(initAutoScroll);
+</script>

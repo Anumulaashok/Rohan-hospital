@@ -14,7 +14,12 @@ import { FAQS } from '../data/faqs.js';
           <h3 class="font-sans text-[17px] font-semibold text-ink">{f.q}</h3>
           <Icon name="chevronDown" class="mt-0.5 h-5 w-5 shrink-0 text-maroon transition-transform group-open:rotate-180" />
         </summary>
-        <p class="pb-6 pr-8 text-ink/75">{f.a}</p>
+        <p class:list={['pr-8 text-ink/75', f.video ? 'pb-4' : 'pb-6']}>{f.a}</p>
+        {f.video && (
+          <button type="button" class="mb-6 inline-flex items-center gap-2 rounded-full bg-blush px-4 py-2 text-sm font-semibold text-maroon transition-colors hover:bg-blush-line" data-video={f.video.id} data-video-short={f.video.short ? '' : undefined} data-video-title={f.video.title}>
+            <Icon name="youtube" class="h-4 w-4" />Watch: {f.video.title}
+          </button>
+        )}
       </details>
     ))}
   </div>

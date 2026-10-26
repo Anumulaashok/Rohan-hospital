@@ -28,6 +28,12 @@
 
   .arch { border-radius: 999px 999px 28px 28px; }
 
+  .autoscroll { scrollbar-width: none; }
+  .autoscroll::-webkit-scrollbar { display: none; }
+  .autoscroll.is-stopped { scroll-snap-type: x mandatory; scrollbar-width: thin; }
+  .autoscroll.is-stopped::-webkit-scrollbar { display: initial; }
+  .autoscroll.is-stopped [data-clone] { display: none; }
+
   .field-label { @apply mb-1.5 block text-sm font-medium text-ink; }
   .field { @apply block min-h-[48px] w-full rounded-xl border border-ink/20 bg-white px-4 py-2.5 text-ink placeholder:text-ink/40 transition focus:border-maroon focus:outline-none focus:ring-2 focus:ring-maroon/20; }
   .field[aria-invalid='true'] { @apply border-red-500 ring-2 ring-red-500/15; }
