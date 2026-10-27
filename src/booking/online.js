@@ -53,9 +53,12 @@ export async function initOnlineBooking(form, store, { showErrors, validateBooki
     '<option value="">Choose a doctor</option>' +
     info.doctors.map((d) => `<option value="${d.id}">${d.name}${d.specialty ? ` — ${d.specialty}` : ''}</option>`).join('');
   doctorField.hidden = false;
-  if (info.doctors.length === 1) {
-    doctorSelect.value = info.doctors[0].id;
-    store.set({ doctor: info.doctors[0].id, doctorName: info.doctors[0].name });
+  // "Book with Dr X" on the Doctors page links here with ?doctor=
+  const wanted = new URLSearchParams(window.location.search).get('doctor');
+  const preset = info.doctors.find((d) => d.id === wanted) ?? (info.doctors.length === 1 ? info.doctors[0] : null);
+  if (preset) {
+    doctorSelect.value = preset.id;
+    store.set({ doctor: preset.id, doctorName: preset.name });
   }
   doctorSelect.addEventListener('change', () => {
     const d = info.doctors.find((x) => x.id === doctorSelect.value);

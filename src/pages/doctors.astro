@@ -84,9 +84,9 @@ const initials = (name: string) => name.replace(/^Dr\.\s*/, '').split(/\s+/).sli
   <section class="section">
     <div class="container-x grid items-start gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
       <div>
-        <h2 class="section-title">Specialists on our team</h2>
+        <h2 id="team-heading" class="section-title">Specialists on our team</h2>
         <p class="lede">Consultants who work alongside Dr. Sridevi and Dr. Naresh.</p>
-        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+        <ul id="team-list" class="mt-8 grid gap-3 sm:grid-cols-2">
           {team.map((d) => (
             <li class="flex items-start gap-3 rounded-2xl border border-blush-line p-4">
               <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-maroon text-sm font-semibold text-white" aria-hidden="true">{initials(d.name)}</span>
@@ -104,3 +104,8 @@ const initials = (name: string) => name.replace(/^Dr\.\s*/, '').split(/\s+/).sli
 
   <CtaBand />
 </Base>
+
+<script>
+  import { initDoctorsFromCareDesk } from '../booking/doctors.js';
+  initDoctorsFromCareDesk(document.getElementById('team-list'), document.getElementById('team-heading'));
+</script>

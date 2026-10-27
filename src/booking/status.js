@@ -11,6 +11,7 @@ function summary(b) {
     ['Doctor', b.doctor],
     ['When', when],
     ['Consultation', formatPaise(b.amounts.basePaise)],
+    b.amounts.platformFeePaise > 0 && ['Platform fee', formatPaise(b.amounts.platformFeePaise)],
     b.amounts.feePaise > 0 && ['Online convenience fee', formatPaise(b.amounts.feePaise)],
     b.amounts.gstPaise > 0 && ['GST on fee', formatPaise(b.amounts.gstPaise)],
     ['Total', formatPaise(b.amounts.totalPaise)],
