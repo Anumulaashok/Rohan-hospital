@@ -1,3 +1,4 @@
+import { sendToCareDesk } from './caredesk.js';
 import { buildMessage, buildWhatsAppUrl } from './message.js';
 import { validateBooking } from './validate.js';
 
@@ -12,8 +13,9 @@ export async function handleAppointmentSubmission(formData) {
   const errors = validateBooking(formData);
   if (Object.keys(errors).length) return { ok: false, errors };
 
-  // Phase 1: immediate WhatsApp dispatch.
+  // Phase 1: immediate WhatsApp dispatch, then a best-effort copy to CareDesk.
   redirectToWhatsApp(formData);
+  sendToCareDesk(formData);
 
   // Phase 2 hooks (payments + slot locking), enable once a backend exists:
   // const order = await createPaymentOrder(formData.service, formData.serviceFee);

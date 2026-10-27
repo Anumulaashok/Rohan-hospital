@@ -15,6 +15,14 @@ npm run build     # production build to dist/
 npm run preview   # serve the built site
 ```
 
+## CareDesk sync
+When a patient presses **Send booking on WhatsApp**, the form details are also posted to CareDesk (`POST /api/public/<clinic>/requests`) so reception gets a "New request to OP" popup. Set these at build time (Netlify → Site configuration → Environment variables):
+```bash
+PUBLIC_CAREDESK_URL=https://caredesk.example.com   # unset = sync off
+PUBLIC_CAREDESK_CLINIC=rohan                       # CareDesk clinic slug (default: rohan)
+```
+The post is fire-and-forget; WhatsApp still opens if CareDesk is down.
+
 ## Production URL
 Canonical links, the sitemap and JSON-LD ids use `site` in `astro.config.mjs`, which defaults to `https://www.rohanhospitalknr.in`. Build for another domain with:
 ```bash
