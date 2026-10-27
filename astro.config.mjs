@@ -5,5 +5,5 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: process.env.SITE_URL || 'https://www.rohanhospitalknr.in',
   prefetch: true,
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/booking-status') })],
 });
