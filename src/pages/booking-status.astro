@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { HOSPITAL } from '../config/hospital.js';
+---
+<Base title="Your booking | Rohan Hospital Karimnagar" description="Booking and payment status for your Rohan Hospital appointment." noindex>
+  <section class="section">
+    <div class="container-x max-w-xl">
+      <div id="booking-status" class="rounded-[2rem] bg-white p-6 shadow-soft ring-1 ring-blush-line sm:p-8" aria-live="polite">
+        <p class="text-ink/60">Checking your booking…</p>
+      </div>
+      <p class="mt-4 text-center text-sm text-ink/60">
+        Questions? Call <a href={`tel:${HOSPITAL.phones[0].tel}`} class="link">{HOSPITAL.phones[0].label}</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { initBookingStatus } from '../booking/status.js';
+  initBookingStatus(document.getElementById('booking-status'));
+</script>

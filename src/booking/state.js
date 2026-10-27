@@ -1,4 +1,4 @@
-const initialState = { name: '', phone: '', age: '', gender: '', service: '', date: '', slot: '', notes: '' };
+const initialState = { name: '', phone: '', age: '', gender: '', service: '', date: '', slot: '', notes: '', doctor: '', doctorName: '', acceptTerms: false };
 
 export function createStore() {
   let state = { ...initialState };

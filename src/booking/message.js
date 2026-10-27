@@ -20,6 +20,7 @@ export function buildMessage(data) {
   ];
   if (extras) lines.push(`🧾 *Age / Gender:* ${extras}`);
   lines.push(
+    ...(data.doctorName ? [`👩‍⚕️ *Doctor:* ${data.doctorName}`] : []),
     `🩺 *Department/Service:* ${data.service || 'Not specified'}`,
     `📅 *Preferred Date:* ${formatDate(data.date) || BLANK}`,
     `⏰ *Preferred Time Slot:* ${data.slot || BLANK}`,

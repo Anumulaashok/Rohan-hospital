@@ -4,8 +4,9 @@ import { createStore } from './state.js';
 import { buildMessage } from './message.js';
 import { isSlotPast, todayISO, validateBooking } from './validate.js';
 import { handleAppointmentSubmission } from './submit.js';
+import { initOnlineBooking } from './online.js';
 
-const FIELD_ORDER = ['name', 'phone', 'service', 'date', 'slot'];
+const FIELD_ORDER = ['name', 'phone', 'doctor', 'service', 'date', 'slot', 'acceptTerms'];
 
 function renderServiceChips(container) {
   container.innerHTML = BOOKING_SERVICES.map(
@@ -41,7 +42,7 @@ function renderPreview(container, message) {
   );
 }
 
-function showErrors(form, errors) {
+export function showErrors(form, errors) {
   FIELD_ORDER.forEach((field) => {
     const el = form.querySelector(`[data-error="${field}"]`);
     if (!el) return;
@@ -107,6 +108,8 @@ export function initBookingForm(form) {
     // Re-validate live only after a failed submit, so errors clear as the user fixes them.
     if (showLiveErrors) showErrors(form, validateBooking(state));
   });
+
+  initOnlineBooking(form, store, { showErrors, validateBooking });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
